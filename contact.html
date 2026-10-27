@@ -1958,7 +1958,9 @@
         const nameEl = document.getElementById('c-name');
         const phoneEl = document.getElementById('c-phone');
         const emailEl = document.getElementById('c-email');
-
+    nameEl.addEventListener("input", () => {
+    nameEl.value = nameEl.value.replace(/[^a-zA-Z\s]/g, "");
+});
         const checkName = () => setErr(nameEl, nameEl.value.trim().length < 2 ? 'Please enter your name.' : '');
         const checkPhone = () => {
             const digits = phoneEl.value.replace(/[\s\-+]/g, '').replace(/^91(?=\d{10}$)/, '');
@@ -1996,6 +1998,9 @@
             footError.classList.add('ok');
             footError.textContent = 'Subscribed. Check your inbox for this week\u2019s workouts.';
             emailInput.value = '';
+             setTimeout(()=>{
+                footError.textContent = ""
+            },2000)
         });
         emailInput.addEventListener('keydown', e => { if (e.key === 'Enter') subBtn.click(); });
     </script>

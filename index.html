@@ -2231,6 +2231,9 @@
             footError.classList.add('ok');
             footError.textContent = 'Subscribed. Check your inbox for this week\u2019s workouts.';
             emailInput.value = '';
+            setTimeout(()=>{
+                footError.textContent = ""
+            },2000)
         });
         emailInput.addEventListener('keydown', e => { if (e.key === 'Enter') subBtn.click(); });
     </script>
