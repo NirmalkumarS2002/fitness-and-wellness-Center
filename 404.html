@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found | Vitalyn Fitness & Wellness Studio</title>
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..800&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { overflow-x: hidden; }
+        body { overflow-x: hidden; font-family: "DM Sans", sans-serif; background: var(--dark); color: #fff; }
+
+        :root {
+            --pcolor: #e8552d;
+            --dark: #10302b;
+            --sage: #e6eee3;
+            --sand: #f7f4ee;
+            --head: "Bricolage Grotesque", sans-serif;
+        }
+
+        a:focus-visible, button:focus-visible { outline: 3px solid var(--pcolor); outline-offset: 3px; }
+
+        .nf-wrap { position: relative; min-height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+        .nf-wrap::before { content: ""; position: absolute; right: -180px; top: -180px; width: 520px; height: 520px; border-radius: 50%; background: var(--pcolor); opacity: .14; }
+        .nf-wrap::after { content: ""; position: absolute; left: -160px; bottom: -200px; width: 460px; height: 460px; border-radius: 50%; background: #7fa595; opacity: .1; }
+
+        .nf-top { position: relative; z-index: 2; max-width: 1400px; width: 100%; margin: 0 auto; padding: 26px 30px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+        .nf-top .logoimage img { height: 44px; width: auto; display: block; }
+        .nf-top .back-home { display: inline-flex; align-items: center; gap: 8px; color: #fff; text-decoration: none; font-weight: 600; font-size: 15px; padding: 10px 20px; border-radius: 50px; border: 1px solid #ffffff40; transition: .3s ease; }
+        .nf-top .back-home:hover { background: var(--pcolor); border-color: var(--pcolor); }
+        .nf-top .back-home span { font-size: 20px; }
+
+        .nf-main { position: relative; z-index: 2; flex: 1; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px 20px 70px; }
+        .nf-inner { max-width: 680px; width: 100%; animation: nfIn .8s cubic-bezier(.2,.7,.2,1) both; }
+        @keyframes nfIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+
+        /* the "0" is a weight plate */
+        .nf-code { display: flex; align-items: center; justify-content: center; gap: clamp(4px, 1.5vw, 14px); font-family: var(--head); font-weight: 800; font-size: clamp(90px, 22vw, 220px); line-height: 1; letter-spacing: -.05em; }
+        .nf-code .num { color: #fff; }
+        .plate { width: .86em; height: .86em; flex-shrink: 0; animation: spin 14s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .nf-tag { display: inline-flex; align-items: center; gap: 8px; background: #ffffff1a; font-weight: 700; font-size: 14px; padding: 7px 16px; border-radius: 40px; margin: 26px 0 16px; }
+        .nf-tag::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--pcolor); }
+        .nf-inner h1 { font-family: var(--head); font-size: clamp(30px, 5vw, 50px); line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 14px; }
+        .nf-inner h1 em { color: var(--pcolor); }
+        .nf-inner p.msg { color: #cfe0d9; font-size: 17px; line-height: 1.7; max-width: 520px; margin: 0 auto 32px; }
+
+        .nf-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .nf-btn { display: inline-flex; align-items: center; gap: 10px; padding: 16px 32px; border-radius: 50px; font-size: 16px; font-weight: 600; font-family: inherit; text-decoration: none; cursor: pointer; position: relative; overflow: hidden; z-index: 1; border: none; transition: color .4s ease; }
+        .nf-btn span { font-size: 22px; transition: transform .3s ease; }
+        .nf-btn::before { content: ""; position: absolute; top: 0; left: 0; height: 100%; width: 0; z-index: -1; transition: width .4s ease; }
+        .nf-btn:hover::before { width: 100%; }
+        .nf-btn:hover span { transform: translateX(5px); }
+        .nf-btn.primary { background: var(--pcolor); color: #fff; }
+        .nf-btn.primary::before { background: #fff; }
+        .nf-btn.primary:hover { color: var(--dark); }
+        .nf-btn.ghost { background: transparent; color: #fff; border: 1.5px solid #ffffff59; }
+        .nf-btn.ghost::before { background: #ffffff1f; }
+        .nf-btn.ghost:hover span { transform: translateX(-5px); }
+
+        .nf-links { margin-top: 44px; padding-top: 26px; border-top: 1px solid #ffffff26; }
+        .nf-links p { color: #9db8ad; font-size: 14px; font-weight: 600; margin-bottom: 14px; }
+        .nf-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+        .nf-chips a { display: inline-flex; align-items: center; gap: 6px; color: #fff; text-decoration: none; font-size: 14px; font-weight: 600; padding: 9px 18px; border-radius: 40px; background: #ffffff14; transition: .3s ease; }
+        .nf-chips a .material-symbols-outlined { font-size: 18px; color: var(--pcolor); transition: .3s ease; }
+        .nf-chips a:hover { background: var(--pcolor); }
+        .nf-chips a:hover .material-symbols-outlined { color: #fff; }
+
+        .nf-foot { position: relative; z-index: 2; text-align: center; padding: 20px; font-size: 13px; color: #8ea39b; border-top: 1px solid #ffffff1a; }
+
+        @media (max-width: 560px) {
+            .nf-top { padding: 18px 16px; }
+            .nf-top .logoimage img { height: 36px; }
+            .nf-top .back-home { padding: 9px 16px; font-size: 14px; }
+            .nf-btn { padding: 14px 26px; width: 100%; justify-content: center; }
+        }
+        @media (prefers-reduced-motion: reduce) { .plate, .nf-inner { animation: none; } }
+    </style>
+</head>
+
+<body>
+    <div class="nf-wrap">
+
+        <header class="nf-top">
+            <a href="index.html" class="logoimage"><img src="./src/logo.webp" alt="Vitalyn Logo"></a>
+            <a href="index.html" class="back-home"><span class="material-symbols-outlined">home</span>Home</a>
+        </header>
+
+        <main class="nf-main">
+            <div class="nf-inner">
+
+                <div class="nf-code" aria-hidden="true">
+                    <span class="num">4</span>
+                    <svg class="plate" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="100" cy="100" r="96" fill="#e8552d"/>
+                        <circle cx="100" cy="100" r="74" fill="none" stroke="#10302b" stroke-opacity=".35" stroke-width="5"/>
+                        <circle cx="100" cy="100" r="50" fill="none" stroke="#10302b" stroke-opacity=".35" stroke-width="5"/>
+                        <circle cx="100" cy="100" r="22" fill="#10302b"/>
+                        <circle cx="100" cy="100" r="9" fill="#e8552d"/>
+                        <rect x="96" y="6" width="8" height="26" rx="4" fill="#10302b" fill-opacity=".35"/>
+                        <rect x="96" y="168" width="8" height="26" rx="4" fill="#10302b" fill-opacity=".35"/>
+                        <rect x="6" y="96" width="26" height="8" rx="4" fill="#10302b" fill-opacity=".35"/>
+                        <rect x="168" y="96" width="26" height="8" rx="4" fill="#10302b" fill-opacity=".35"/>
+                    </svg>
+                    <span class="num">4</span>
+                </div>
+
+                <p class="nf-tag">Page not found</p>
+                <h1>This page is <em>still in training.</em></h1>
+                <p class="msg">The page you are looking for has moved, does not exist yet, or is coming soon. Head back and pick up your routine from somewhere else.</p>
+
+                <div class="nf-actions">
+                    <a href="index.html" class="nf-btn primary">Back to Home<span class="material-symbols-outlined">arrow_right_alt</span></a>
+                    <button type="button" class="nf-btn ghost" id="goBack"><span class="material-symbols-outlined">arrow_back</span>Go Back</button>
+                </div>
+
+                <nav class="nf-links" aria-label="Helpful links">
+                    <p>Or jump to:</p>
+                    <div class="nf-chips">
+                        <a href="service.html"><span class="material-symbols-outlined">fitness_center</span>Classes &amp; Plans</a>
+                        <a href="blog.html"><span class="material-symbols-outlined">menu_book</span>Blogs</a>
+                        <a href="about.html"><span class="material-symbols-outlined">groups</span>About</a>
+                        <a href="contact.html"><span class="material-symbols-outlined">call</span>Contact</a>
+                        <a href="login.html"><span class="material-symbols-outlined">login</span>Login</a>
+                    </div>
+                </nav>
+
+            </div>
+        </main>
+
+        <footer class="nf-foot">Copyright @ 2026 Vitalyn Fitness &amp; Wellness</footer>
+    </div>
+
+    <script>
+        // Go back if there is history, otherwise go home
+        document.getElementById("goBack").addEventListener("click", () => {
+            if (window.history.length > 1 && document.referrer) window.history.back();
+            else window.location.href = "index.html";
+        });
+    </script>
+</body>
+
+</html>

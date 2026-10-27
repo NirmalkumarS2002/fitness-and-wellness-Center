@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | Vitalyn Fitness & Wellness Studio</title>
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..800&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { overflow-x: hidden; }
+        body { overflow-x: hidden; font-family: "DM Sans", sans-serif; background: var(--sand); color: var(--dark); }
+        input, button { font-family: inherit; }
+
+        :root {
+            --pcolor: #e8552d;
+            --dark: #10302b;
+            --sand: #f7f4ee;
+            --sage: #e6eee3;
+            --sub: #5f6e69;
+            --head: "Bricolage Grotesque", sans-serif;
+        }
+
+        .login-wrap { min-height: 100vh; display: grid; grid-template-columns: 1.05fr 1fr; }
+
+        /* ===== LEFT: animated photo panel ===== */
+        .login-visual { position: relative; overflow: hidden; background: var(--dark); display: flex; flex-direction: column; justify-content: space-between; padding: 44px 50px; }
+
+        /* photo slideshow (3 online images crossfade) */
+        .lv-bg { position: absolute; inset: 0; overflow: hidden; background: var(--dark); }
+        .lv-bg img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; opacity: 0; animation: lvFade 18s infinite, lvZoom 18s ease-in-out infinite alternate; }
+        .lv-bg img:nth-child(2) { animation-delay: 6s, 0s; }
+        .lv-bg img:nth-child(3) { animation-delay: 12s, 0s; }
+        @keyframes lvFade { 0% { opacity: 0; } 6%, 33% { opacity: 1; } 39%, 100% { opacity: 0; } }
+        @keyframes lvZoom { from { transform: scale(1); } to { transform: scale(1.14); } }
+
+        .login-visual::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(10,33,29,.7), rgba(10,33,29,.1) 35%, rgba(10,33,29,.92)); }
+        .login-visual > *:not(.lv-bg) { position: relative; z-index: 2; }
+        .login-visual .logoimage img { width: 150px; display: block; }
+
+        .lv-pills { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 22px; }
+        .lv-pills div { display: flex; align-items: center; gap: 8px; background: #ffffffee; color: var(--dark); font-weight: 700; font-size: 14px; padding: 10px 16px; border-radius: 40px; animation: bob 4s ease-in-out infinite alternate; }
+        .lv-pills div:nth-child(2) { animation-delay: .8s; }
+        .lv-pills div:nth-child(3) { animation-delay: 1.6s; }
+        .lv-pills .material-symbols-outlined { color: var(--pcolor); font-size: 20px; }
+        @keyframes bob { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+
+        .visual-quote { max-width: 460px; background: #ffffff1a; backdrop-filter: blur(10px); border: 1px solid #ffffff2e; border-radius: 28px; padding: 30px; }
+        .visual-quote p { font-family: var(--head); color: #fff; font-size: 24px; line-height: 1.3; letter-spacing: -.4px; margin-bottom: 20px; }
+        .visual-quote-foot { display: flex; align-items: center; gap: 12px; }
+        .visual-quote-foot img { height: 46px; width: 46px; border-radius: 50%; object-fit: cover; border: 2px solid var(--pcolor); }
+        .visual-quote-foot h4 { color: #fff; font-size: 15px; }
+        .visual-quote-foot span.role { color: #cfe0d9; font-size: 13px; display: block; }
+
+        /* ===== RIGHT: form ===== */
+        .login-pane { display: flex; align-items: center; justify-content: center; padding: 50px 40px; }
+        .login-form-wrap { width: 100%; max-width: 420px; animation: formIn .8s cubic-bezier(.2,.7,.2,1) both; }
+        @keyframes formIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: none; } }
+        .mob-logo { display: none; margin-bottom: 26px; }
+        .mob-logo img { width: 130px; }
+
+        .login-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--sage); font-weight: 700; font-size: 14px; padding: 7px 16px; border-radius: 40px; margin-bottom: 18px; }
+        .login-eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--pcolor); }
+        .login-form-wrap h1 { font-family: var(--head); font-size: 46px; line-height: 1.05; letter-spacing: -1.5px; margin-bottom: 10px; }
+        .login-form-wrap h1 em { color: var(--pcolor); }
+        .login-form-wrap > p.sub { color: var(--sub); font-size: 16px; line-height: 1.6; margin-bottom: 26px; }
+
+        .role-tabs { position: relative; display: grid; grid-template-columns: 1fr 1fr; background: var(--sage); padding: 5px; border-radius: 50px; margin-bottom: 28px; }
+        .role-tabs::before { content: ""; position: absolute; top: 5px; bottom: 5px; left: 5px; width: calc(50% - 5px); background: var(--dark); border-radius: 40px; transition: transform .4s cubic-bezier(.3,.9,.3,1); }
+        .role-tabs[data-pos="1"]::before { transform: translateX(100%); }
+        .role-tab { position: relative; z-index: 1; background: none; border: none; padding: 12px 10px; font-size: 15px; font-weight: 700; color: var(--dark); cursor: pointer; border-radius: 40px; transition: color .3s ease; }
+        .role-tab.active { color: #fff; }
+        .role-tab:focus-visible, .log-btn:focus-visible, .forget:focus-visible, .home-btn:focus-visible { outline: 3px solid var(--pcolor); outline-offset: 2px; }
+
+        .field { margin-bottom: 20px; }
+        .field label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+        .uline { position: relative; }
+        .uline > .material-symbols-outlined.lead { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: #7d8c86; font-size: 22px; pointer-events: none; }
+        .uline input { width: 100%; border: 2px solid transparent; background: #fff; border-radius: 16px; padding: 16px 48px 16px 50px; font-size: 16px; color: var(--dark); outline: none; transition: .3s ease; box-shadow: 0 2px 0 #10302b14; }
+        .uline input::placeholder { color: #98a6a0; }
+        .uline input:focus { border-color: var(--pcolor); box-shadow: 0 8px 24px rgba(232,85,45,.14); }
+        .field.bad .uline input { border-color: #c8341a; }
+        .uline .passeye { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 22px; color: #7d8c86; cursor: pointer; user-select: none; }
+        .uline .passeye:hover { color: var(--pcolor); }
+        .errormsg { color: #c8341a; margin-top: 7px; font-size: 13px; min-height: 16px; }
+
+        .field-foot { display: flex; justify-content: space-between; align-items: center; margin: -4px 0 26px; }
+        .remember { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--sub); cursor: pointer; }
+        .remember input { accent-color: var(--pcolor); width: 17px; height: 17px; }
+        .forget { font-size: 14px; text-decoration: none; color: var(--pcolor); font-weight: 700; }
+        .forget:hover { text-decoration: underline; }
+
+        .log-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 17px 30px; background: var(--pcolor); border: none; color: #fff; border-radius: 50px; position: relative; overflow: hidden; z-index: 1; font-size: 16px; font-weight: 700; cursor: pointer; }
+        .log-btn span { transition: .4s ease; font-size: 22px; }
+        .log-btn::before { content: ""; height: 100%; width: 0; background: var(--dark); transition: width .4s ease; position: absolute; top: 0; left: 0; z-index: -1; }
+        .log-btn:hover::before { width: 100%; }
+        .log-btn:hover span { transform: translateX(6px); }
+
+        .login-foot { text-align: center; margin-top: 30px; }
+        .login-foot p { font-size: 15px; color: var(--sub); margin-bottom: 16px; }
+        .login-foot p a { color: var(--pcolor); text-decoration: none; font-weight: 700; }
+        .login-foot p a:hover { text-decoration: underline; }
+        .home-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; text-decoration: none; color: var(--sub); font-weight: 600; }
+        .home-btn:hover { color: var(--pcolor); }
+        .home-btn span { font-size: 19px; }
+
+        @media (max-width:900px) {
+            .login-wrap { grid-template-columns: 1fr; }
+            .login-visual { display: none; }
+            .login-pane { padding: 36px 22px; align-items: flex-start; }
+            .mob-logo { display: block; }
+        }
+        @media (max-width:400px) { .login-form-wrap h1 { font-size: 36px; } }
+
+        /* ===== success popup ===== */
+        .popup { position: fixed; inset: 0; background: rgba(10, 33, 29, .6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 9999; padding: 20px; }
+        .popup.active { display: flex; }
+        .popup-box { width: 360px; max-width: 100%; background: #fff; border-radius: 30px; padding: 38px 32px; text-align: center; box-shadow: 0 30px 70px rgba(10, 33, 29, .35); animation: popUp .5s cubic-bezier(.2,1.2,.4,1) both; }
+        @keyframes popUp { from { opacity: 0; transform: scale(.85) translateY(20px); } to { opacity: 1; transform: none; } }
+        .success { width: 78px; height: 78px; border-radius: 50%; background: var(--pcolor); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 42px; margin: 0 auto 18px; }
+        .popup-box h2 { font-family: var(--head); font-size: 26px; letter-spacing: -.5px; margin-bottom: 8px; }
+        .popup-box p { color: var(--sub); margin-bottom: 24px; font-size: 15px; line-height: 1.6; }
+        .popup-box button { padding: 14px 44px; border: none; background: var(--dark); color: #fff; font-weight: 700; font-size: 15px; border-radius: 50px; cursor: pointer; transition: .3s ease; }
+        .popup-box button:hover { background: var(--pcolor); }
+        .popup-box button:focus-visible { outline: 3px solid var(--pcolor); outline-offset: 2px; }
+
+        input[type="password"]::-ms-reveal, input[type="password"]::-ms-clear { display: none; }
+        @media (prefers-reduced-motion: reduce) {
+            .lv-pills div, .login-form-wrap, .popup-box { animation: none !important; }
+            .lv-bg img { animation: none; }
+            .lv-bg img:first-child { opacity: 1; }
+        }
+
+        /* ===== sign-up extras ===== */
+        .lv-perks { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 22px; }
+        .lv-perks li { display: flex; align-items: center; gap: 12px; color: #fff; font-weight: 600; font-size: 16px; opacity: 0; animation: perkIn .7s both; }
+        .lv-perks li:nth-child(1) { animation-delay: .3s; } .lv-perks li:nth-child(2) { animation-delay: .5s; } .lv-perks li:nth-child(3) { animation-delay: .7s; }
+        @keyframes perkIn { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: none; } }
+        .lv-perks .material-symbols-outlined { height: 34px; width: 34px; border-radius: 50%; background: var(--pcolor); display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        .visual-stats { display: flex; gap: 30px; margin-top: 4px; }
+        .visual-stats h3 { font-family: var(--head); color: #fff; font-size: 30px; letter-spacing: -1px; }
+        .visual-stats p { color: #cfe0d9; font-size: 13px; margin: 0; }
+
+        /* member avatars */
+        .avatars { display: flex; align-items: center; margin-bottom: 22px; }
+        .avatars img { height: 42px; width: 42px; border-radius: 50%; object-fit: cover; border: 3px solid #214a43; margin-left: -12px; background: var(--sage); }
+        .avatars img:first-child { margin-left: 0; }
+        .avatars span { margin-left: 14px; color: #fff; font-weight: 600; font-size: 14px; }
+
+        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .strength { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
+        .strength i { flex: 1; height: 5px; border-radius: 5px; background: #10302b1f; transition: background .3s ease; }
+        .strength[data-lvl="1"] i:nth-child(1) { background: #e8552d; }
+        .strength[data-lvl="2"] i:nth-child(-n+2) { background: #f0a22e; }
+        .strength[data-lvl="3"] i { background: #2e9e63; }
+        .strength small { font-size: 12px; font-weight: 700; color: var(--sub); min-width: 48px; text-align: right; }
+        @media (max-width:560px) { .field-row { grid-template-columns: 1fr; } }
+        @media (prefers-reduced-motion: reduce) { .lv-perks li { animation: none; opacity: 1; } }
+    </style>
+</head>
+
+<body>
+
+    <div class="popup" id="popup" role="dialog" aria-modal="true" aria-labelledby="popTitle">
+        <div class="popup-box">
+            <span class="material-symbols-outlined success">check</span>
+            <h2 id="popTitle">Account created</h2>
+            <p>Welcome to Vitalyn. Log in to book your free trial week.</p>
+            <button id="okBtn">Go to Login</button>
+        </div>
+    </div>
+
+    <div class="login-wrap">
+
+        <div class="login-visual">
+            <div class="lv-bg">
+                <img src="./src/image_8.webp" alt="">
+                <img src="./src/image_9.webp" alt="">
+                <img src="./src/image_10.webp" alt="">
+            </div>
+            <a href="index.html" class="logoimage"><img src="./src/logo.webp" alt="Vitalyn Logo"></a>
+
+            <div>
+                <ul class="lv-perks">
+                    <li><span class="material-symbols-outlined">redeem</span>First week free, no card needed</li>
+                    <li><span class="material-symbols-outlined">event_available</span>Book classes in a few taps</li>
+                    <li><span class="material-symbols-outlined">monitoring</span>Track your progress every month</li>
+                </ul>
+                <div class="visual-quote">
+                    <p>Create your account and start a stronger, calmer chapter. We will handle the plan.</p>
+                    <div class="avatars">
+                        <img src="./src/img14.webp"  alt="">
+                        <img src="./src/img15.webp"  alt="">
+                        <img src="./src/img16.webp"  alt="">
+                        <img src="./src/img17.webp"  alt="">
+                        <span>Join 5,800+ members</span>
+                    </div>
+                    <div class="visual-stats">
+                        <div><h3>5.8K+</h3><p>Members</p></div>
+                        <div><h3>40+</h3><p>Weekly classes</p></div>
+                        <div><h3>45+</h3><p>Coaches</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login-pane">
+            <div class="login-form-wrap">
+
+                <a href="index.html" class="mob-logo"><img src="./src/logo.webp" alt="Vitalyn Logo"></a>
+
+                <p class="login-eyebrow">Join Vitalyn</p>
+                <h1>Create your <em>account.</em></h1>
+                <p class="sub">Sign up to book classes and open your member or coach dashboard.</p>
+
+                <div class="role-tabs" id="roleTabs" data-pos="0" role="tablist" aria-label="Sign up as">
+                    <button class="role-tab active" data-role="Member" role="tab" aria-selected="true">Member</button>
+                    <button class="role-tab" data-role="Coach" role="tab" aria-selected="false">Coach / Staff</button>
+                </div>
+
+                <div class="form-box field">
+                    <label for="log-name">Full name</label>
+                    <div class="uline">
+                        <span class="material-symbols-outlined lead">person</span>
+                        <input type="text" placeholder="Enter your name" id="log-name" autocomplete="name">
+                    </div>
+                    <p class="errormsg" aria-live="polite"></p>
+                </div>
+
+                <div class="form-box field">
+                    <label for="log-email">Email address</label>
+                    <div class="uline">
+                        <span class="material-symbols-outlined lead">mail</span>
+                        <input type="email" placeholder="you@vitalyn.com" id="log-email" autocomplete="email">
+                    </div>
+                    <p class="errormsg" aria-live="polite"></p>
+                </div>
+
+                <div class="form-box field">
+                    <label for="log-pass">Password</label>
+                    <div class="uline">
+                        <span class="material-symbols-outlined lead">lock</span>
+                        <input type="password" placeholder="Create a password" id="log-pass" autocomplete="new-password">
+                        <span class="material-symbols-outlined passeye" role="button" aria-label="Show or hide password" tabindex="0">visibility_off</span>
+                    </div>
+                    <div class="strength" id="strength" data-lvl="0" aria-hidden="true"><i></i><i></i><i></i><small></small></div>
+                    <p class="errormsg" aria-live="polite"></p>
+                </div>
+
+                <div class="form-box field">
+                    <label for="log-conpass">Confirm password</label>
+                    <div class="uline">
+                        <span class="material-symbols-outlined lead">lock_reset</span>
+                        <input type="password" placeholder="Re-enter your password" id="log-conpass" autocomplete="new-password">
+                        <span class="material-symbols-outlined passeye" role="button" aria-label="Show or hide password" tabindex="0">visibility_off</span>
+                    </div>
+                    <p class="errormsg" aria-live="polite"></p>
+                </div>
+
+                <button class="log-btn">Create Account<span class="material-symbols-outlined">arrow_right_alt</span></button>
+
+                <div class="login-foot">
+                    <p>Already a member? <a href="login.html">Log In</a></p>
+                    <a href="index.html" class="home-btn"><span class="material-symbols-outlined">home</span>Back to Home</a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const nameInput = document.querySelector("#log-name");
+        const email = document.querySelector("#log-email");
+        const password = document.querySelector("#log-pass");
+        const confirmPassword = document.querySelector("#log-conpass");
+        const loginBtn = document.querySelector(".log-btn");
+
+        const roleWrap = document.querySelector("#roleTabs");
+        const roleTabs = document.querySelectorAll(".role-tab");
+        const eyeIcons = document.querySelectorAll(".passeye");
+        const errorMsgs = document.querySelectorAll(".errormsg");
+        const fields = document.querySelectorAll(".field");
+        const strength = document.querySelector("#strength");
+
+        const popup = document.querySelector("#popup");
+        const okBtn = document.querySelector("#okBtn");
+
+        let selectedRole = "Member";
+
+        // ----- Image fallback: if an online image fails, show a placeholder photo -----
+        document.addEventListener("error", (e) => {
+            const t = e.target;
+            if (t && t.tagName === "IMG" && !t.dataset.fb) {
+                t.dataset.fb = "1";
+                t.src = "https://picsum.photos/seed/vitalyn-" + Math.floor(Math.random() * 100) + "/1000/1200";
+            }
+        }, true);
+
+        // ----- Role switch -----
+        roleTabs.forEach((tab, i) => {
+            tab.addEventListener("click", () => {
+                roleTabs.forEach((t) => { t.classList.remove("active"); t.setAttribute("aria-selected", "false"); });
+                tab.classList.add("active");
+                tab.setAttribute("aria-selected", "true");
+                roleWrap.dataset.pos = i;
+                selectedRole = tab.dataset.role;
+            });
+        });
+
+        // ----- Show / hide password (one eye per field) -----
+        eyeIcons.forEach((eye, index) => {
+            const toggle = () => {
+                const input = index === 0 ? password : confirmPassword;
+                if (input.type === "password") { input.type = "text"; eye.textContent = "visibility"; }
+                else { input.type = "password"; eye.textContent = "visibility_off"; }
+            };
+            eye.addEventListener("click", toggle);
+            eye.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); } });
+        });
+
+        // ----- Letters only in name -----
+        nameInput.addEventListener("input", () => {
+            nameInput.value = nameInput.value.replace(/[^A-Za-z\s]/g, "");
+        });
+
+        // ----- Password strength meter -----
+        password.addEventListener("input", () => {
+            const v = password.value;
+            let score = 0;
+            if (v.length >= 6) score++;
+            if (v.length >= 8 && /[A-Z]/.test(v) && /[a-z]/.test(v)) score++;
+            if (/\d/.test(v) && /[^A-Za-z0-9]/.test(v) && v.length >= 8) score++;
+            if (!v) score = 0;
+            strength.dataset.lvl = score;
+            strength.querySelector("small").textContent = ["", "Weak", "Good", "Strong"][score];
+        });
+
+        // ----- Validation + sign up -----
+        function doSignup() {
+            let isvalid = true;
+            const logregex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const nameRegex = /^[A-Za-z\s]+$/;
+
+            const fn = nameInput.value.trim();
+            const fe = email.value.trim();
+            const fp = password.value.trim();
+            const fcp = confirmPassword.value.trim();
+
+            errorMsgs.forEach((error) => { error.textContent = ""; });
+            fields.forEach((f) => f.classList.remove("bad"));
+
+            const fail = (i, msg) => { errorMsgs[i].textContent = msg; fields[i].classList.add("bad"); isvalid = false; };
+
+            if (fn === "") fail(0, "Enter your name");
+            else if (!nameRegex.test(fn)) fail(0, "Only letters are allowed");
+
+            if (fe === "") fail(1, "Enter your email");
+            else if (!logregex.test(fe)) fail(1, "Enter a valid email, like name@example.com");
+
+            if (fp === "") fail(2, "Enter your password");
+            else if (fp.length < 6) fail(2, "Password must be at least 6 characters");
+
+            if (fcp === "") fail(3, "Confirm your password");
+            else if (fp !== fcp) fail(3, "Passwords do not match");
+
+            if (isvalid) {
+                popup.classList.add("active");
+                okBtn.focus();
+            } else {
+                const firstBad = document.querySelector(".field.bad input");
+                if (firstBad) firstBad.focus();
+            }
+        }
+
+        loginBtn.addEventListener("click", doSignup);
+        [nameInput, email, password, confirmPassword].forEach((el) =>
+            el.addEventListener("keydown", (e) => { if (e.key === "Enter") doSignup(); }));
+
+        // ----- Continue after success (listener added once) -----
+        okBtn.addEventListener("click", () => {
+            try { localStorage.setItem("useremail", email.value); } catch (e) { /* storage unavailable */ }
+            window.location.href = "login.html";
+        });
+    </script>
+</body>
+
+</html>

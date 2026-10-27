@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vitalyn Studio Dashboard</title>
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..800&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --pcolor: #e8552d;
+            --hcolor: #f08a63;
+            --dark: #10302b;
+            --pine2: #1b4a41;
+            --ink: #16231f;
+            --sub: #66756f;
+            --line: #e3e8e1;
+            --bg: #f5f2ec;
+            --card: #ffffff;
+            --sage: #e6eee3;
+            --good: #2e9e63;
+            --warn: #c78a1c;
+            --bad: #c8341a;
+            --head: "Bricolage Grotesque", sans-serif;
+        }
+
+        body { background: var(--bg); font-family: "DM Sans", sans-serif; display: flex; overflow-x: hidden; min-height: 100vh; color: var(--ink); }
+        input, button { font-family: inherit; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid var(--pcolor); outline-offset: 2px; }
+
+        /* ================= SIDEBAR ================= */
+        .sidebar { width: 262px; flex-shrink: 0; background: var(--dark); display: flex; flex-direction: column; height: 100vh; position: sticky; top: 0; transition: width .3s ease; }
+        .sidebar.collapsed { width: 84px; }
+        .sidebar.collapsed .nav-group-label,
+        .sidebar.collapsed .side-nav button span.label,
+        .sidebar.collapsed .sidebar-footer .who,
+        .sidebar.collapsed .sidebar-logo a img { display: none; }
+        .sidebar.collapsed .sidebar-footer, .sidebar.collapsed .side-nav button { justify-content: center; }
+        .sidebar.collapsed .sidebar-top { justify-content: center; }
+
+        .sidebar-top { display: flex; align-items: center; justify-content: space-between; padding: 22px 18px; }
+        .sidebar-logo { display: flex; align-items: center; justify-content: space-between; }
+        .sidebar-logo a { display: flex; align-items: center; }
+        .sidebar-logo a img { width: clamp(130px, 14vw, 160px); }
+        .sidebar-logo .adminclose { color: #fff; display: none; cursor: pointer; }
+        .rail-toggle { background: #ffffff14; border: none; color: #bcd0c8; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+        .rail-toggle:hover { color: #fff; background: #ffffff26; }
+
+        .sidebar-scroll { flex: 1; overflow-y: auto; padding: 10px 16px 20px; }
+        .nav-group-label { font-size: 12px; color: #7fa093; padding: 0 12px; margin: 10px 0 12px; font-weight: 700; }
+        .side-nav { display: flex; flex-direction: column; gap: 6px; }
+        .side-nav button { display: flex; align-items: center; gap: 14px; width: 100%; padding: 13px 16px; border: none; background: transparent; color: #bcd0c8; font-size: 15px; font-weight: 600; border-radius: 50px; cursor: pointer; text-align: left; transition: .3s ease; }
+        .side-nav button .material-symbols-outlined { font-size: 22px; flex-shrink: 0; }
+        .side-nav button:hover { background: #ffffff14; color: #fff; }
+        .side-nav button.active { background: var(--pcolor); color: #fff; box-shadow: 0 8px 20px rgba(232,85,45,.35); }
+        .side-nav .logoutbtn { margin-top: 14px; border: 1px solid #ffffff26; }
+
+        .sidebar-footer { display: flex; align-items: center; gap: 12px; margin: 0 16px 18px; padding: 12px; background: #ffffff10; border-radius: 22px; }
+        .sidebar-footer img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid var(--pcolor); }
+        .sidebar-footer h4 { color: #fff; font-size: 14px; font-weight: 700; text-transform: capitalize; }
+        .sidebar-footer span { color: #9db8ad; font-size: 12px; }
+
+        /* ================= MAIN ================= */
+        .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+        .topbar { background: rgba(245,242,236,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); padding: 14px 30px; display: flex; flex-direction: column; gap: 8px; position: sticky; top: 0; z-index: 50; }
+        .topbar-row1 { display: flex; justify-content: space-between; align-items: center; }
+        .breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--sub); font-weight: 600; }
+        .breadcrumb .current { color: var(--pcolor); font-weight: 700; }
+        .topbar-date { font-size: 13px; color: var(--sub); font-weight: 600; }
+        .topbar-row2 { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+        .topbar h2 { font-family: var(--head); font-weight: 700; font-size: 30px; letter-spacing: -.8px; }
+        .topbar-right { display: flex; align-items: center; gap: 12px; }
+        .search-box { display: flex; align-items: center; gap: 8px; background: #fff; border: 1.5px solid var(--line); border-radius: 50px; padding: 10px 18px; }
+        .search-box input { border: none; background: transparent; outline: none; font-size: 14px; width: 190px; color: var(--ink); }
+        .search-box input:focus-visible { outline: none; }
+        .search-box:focus-within { border-color: var(--pcolor); }
+        .search-box > .material-symbols-outlined { color: var(--sub); font-size: 20px; cursor: pointer; }
+        .icon-btn { position: relative; color: var(--dark); cursor: pointer; background: #fff; border: 1.5px solid var(--line); width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: .25s ease; }
+        .icon-btn:hover { border-color: var(--pcolor); color: var(--pcolor); }
+        .icon-btn .dot { position: absolute; top: 9px; right: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--pcolor); border: 2px solid #fff; }
+        .topbar-avatar img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; border: 2px solid var(--pcolor); display: block; }
+        .topbarimgcontainer { display: none; align-items: center; gap: 14px; }
+        .topbarimgcontainer .topbarmenu { font-size: 26px; color: var(--ink); cursor: pointer; }
+        .tlogo a { display: flex; }
+        .tlogo a img { width: 110px; filter: none; }
+
+        .content-scroll { padding: 24px 30px 44px; display: flex; flex-direction: column; gap: 24px; }
+        .view { display: none; flex-direction: column; gap: 24px; }
+        .view.active { display: flex; animation: viewIn .45s both; }
+        @keyframes viewIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+        .d-btn { padding: 11px 22px; background: var(--dark); border: 1.5px solid var(--dark); color: #fff; cursor: pointer; transition: .3s ease; font-size: 14px; font-weight: 700; border-radius: 50px; white-space: nowrap; }
+        .d-btn:hover { background: var(--pcolor); border-color: var(--pcolor); }
+
+        .panel { background: var(--card); border: 1px solid var(--line); border-radius: 26px; padding: 26px; overflow-x: auto; }
+        .panel h3 { font-family: var(--head); font-weight: 700; font-size: 20px; letter-spacing: -.4px; margin-bottom: 18px; }
+        .panel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; gap: 12px; flex-wrap: wrap; }
+        .panel-head h3 { margin-bottom: 0; }
+        .filter-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+        .filter-chips button { padding: 8px 18px; border-radius: 40px; border: 1.5px solid var(--line); background: transparent; font-size: 13px; font-weight: 700; color: var(--sub); cursor: pointer; transition: .2s ease; }
+        .filter-chips button.active, .filter-chips button:hover { background: var(--dark); border-color: var(--dark); color: #fff; }
+
+        /* greeting banner */
+        .hello { position: relative; overflow: hidden; background: linear-gradient(110deg, var(--dark) 20%, var(--pine2)); color: #fff; border-radius: 30px; padding: 34px 38px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+        .hello::before { content: ""; position: absolute; right: -60px; top: -80px; width: 260px; height: 260px; border-radius: 50%; background: var(--pcolor); opacity: .9; }
+        .hello > * { position: relative; }
+        .hello h1 { font-family: var(--head); font-size: 36px; letter-spacing: -1px; margin-bottom: 6px; text-transform: capitalize; }
+        .hello p { color: #cfe0d9; font-size: 16px; }
+        .hello-stats { display: flex; gap: 14px; flex-wrap: wrap; }
+        .hello-stats div { background: #ffffff1f; backdrop-filter: blur(6px); border-radius: 20px; padding: 14px 22px; min-width: 120px; }
+        .hello-stats b { display: block; font-family: var(--head); font-size: 28px; letter-spacing: -1px; }
+        .hello-stats span { font-size: 13px; color: #e6f0eb; }
+
+        .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 22px; }
+        .bento .span-8 { grid-column: span 8; } .bento .span-4 { grid-column: span 4; } .bento .span-6 { grid-column: span 6; }
+
+        .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .stat-card { background: var(--card); border: 1px solid var(--line); border-radius: 26px; padding: 22px; display: flex; align-items: center; gap: 16px; transition: .3s ease; }
+        .stat-card:hover { border-color: var(--pcolor); transform: translateY(-3px); }
+        .stat-card > .material-symbols-outlined { background: var(--sage); color: var(--dark); width: 54px; height: 54px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; transition: .3s ease; }
+        .stat-card:hover > .material-symbols-outlined { background: var(--pcolor); color: #fff; }
+        .stat-info { display: flex; flex-direction: column; gap: 3px; }
+        .stat-card h2 { font-family: var(--head); font-weight: 700; font-size: 30px; letter-spacing: -1px; line-height: 1; }
+        .stat-card p { font-size: 14px; color: var(--sub); font-weight: 600; }
+        .delta { font-size: 12.5px; color: var(--good); font-weight: 700; }
+        .delta.down { color: var(--bad); }
+
+        .quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+        .quick-actions button { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-radius: 20px; border: 1.5px dashed #10302b40; background: transparent; cursor: pointer; transition: .25s ease; text-align: left; }
+        .quick-actions button:hover { border-color: var(--pcolor); border-style: solid; background: #e8552d0d; }
+        .quick-actions .material-symbols-outlined { color: var(--pcolor); font-size: 26px; }
+        .quick-actions span.t { font-size: 14px; font-weight: 700; color: var(--ink); }
+
+        .bar-chart { display: flex; align-items: flex-end; gap: 16px; height: 210px; padding-top: 10px; }
+        .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; height: 100%; justify-content: flex-end; }
+        .bar { width: 62%; background: linear-gradient(180deg, #3b7a6c, var(--dark)); border-radius: 12px 12px 4px 4px; min-height: 8px; transform-origin: bottom; animation: grow .9s cubic-bezier(.2,.8,.2,1) both; }
+        .bar.hl { background: linear-gradient(180deg, var(--hcolor), var(--pcolor)); }
+        @keyframes grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+        .bar-col span { font-size: 13px; color: var(--sub); font-weight: 600; }
+
+        .donut-wrap { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+        .donut { width: 150px; height: 150px; border-radius: 50%; flex-shrink: 0; background: conic-gradient(var(--pcolor) 0 42%, var(--dark) 42% 73%, #7fa595 73% 90%, #d9e3d6 90% 100%); display: flex; align-items: center; justify-content: center; }
+        .donut::after { content: ""; width: 96px; height: 96px; background: var(--card); border-radius: 50%; }
+        .donut-legend { display: flex; flex-direction: column; gap: 11px; }
+        .leg-item { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
+        .leg-item .dot { width: 12px; height: 12px; border-radius: 50%; }
+
+        .timeline { display: flex; flex-direction: column; }
+        .t-item { display: flex; gap: 14px; padding-bottom: 22px; position: relative; }
+        .t-item:not(:last-child)::before { content: ""; position: absolute; left: 18px; top: 40px; bottom: 2px; width: 2px; background: var(--line); }
+        .t-dot { width: 38px; height: 38px; border-radius: 50%; background: var(--sage); color: var(--dark); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .t-dot .material-symbols-outlined { font-size: 19px; }
+        .t-body h5 { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+        .t-body p { font-size: 13px; color: var(--sub); }
+
+        .event-list { display: flex; flex-direction: column; gap: 10px; }
+        .event-item { display: flex; align-items: center; gap: 14px; padding: 10px; border-radius: 18px; transition: .2s ease; }
+        .event-item:hover { background: var(--bg); }
+        .event-date { background: var(--dark); color: #fff; min-width: 58px; height: 52px; padding: 0 8px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+        .event-date strong { font-size: 15px; font-family: var(--head); line-height: 1.1; white-space: nowrap; }
+        .event-date span { font-size: 11px; opacity: .8; }
+        .event-info h5 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+        .event-info p { font-size: 13px; color: var(--sub); }
+
+        table { width: 100%; border-collapse: collapse; }
+        thead th { text-align: left; font-size: 13px; color: var(--sub); padding: 10px 14px; border-bottom: 1.5px solid var(--line); font-weight: 700; white-space: nowrap; }
+        tbody td { padding: 15px 14px; font-size: 14.5px; border-bottom: 1px solid #eef1ec; white-space: nowrap; }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr { transition: .2s ease; }
+        tbody tr:hover { background: #f8f6f1; }
+        tbody tr.hide { display: none; }
+        .cell-item { font-weight: 700; }
+
+        .badge { padding: 6px 14px; border-radius: 30px; font-size: 12.5px; font-weight: 700; display: inline-block; }
+        .badge.active, .badge.delivered { background: #2e9e6320; color: #1f7a49; }
+        .badge.transit { background: #e8552d1a; color: #c4401b; }
+        .badge.pending, .badge.maintenance { background: #c78a1c22; color: #8f600c; }
+        .badge.expiring { background: #c8341a1a; color: var(--bad); }
+
+        .pagination { display: flex; justify-content: flex-end; align-items: center; gap: 8px; margin-top: 18px; }
+        .pagination button { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--line); background: transparent; font-size: 13px; font-weight: 700; color: var(--ink); cursor: pointer; }
+        .pagination button.active { background: var(--dark); border-color: var(--dark); color: #fff; }
+
+        .fleet-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .fleet-card { border: 1px solid var(--line); border-radius: 24px; background: var(--card); display: flex; align-items: center; gap: 16px; padding: 16px; transition: .3s ease; }
+        .fleet-card:hover { border-color: var(--pcolor); box-shadow: 0 14px 30px rgba(16,48,43,.1); }
+        .fleet-card img { width: 78px; height: 78px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 3px solid var(--sage); }
+        .fleet-card-body { flex: 1; min-width: 0; }
+        .fleet-card-body h4 { font-family: var(--head); font-weight: 700; font-size: 17px; margin-bottom: 4px; }
+        .fleet-card-body p { font-size: 13px; color: var(--sub); margin-bottom: 9px; }
+        .contact-row { display: flex; flex-direction: column; gap: 8px; }
+        .contact-row .material-symbols-outlined { font-size: 18px; color: var(--dark); background: var(--sage); width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: .25s ease; }
+        .contact-row .material-symbols-outlined:hover { background: var(--pcolor); color: #fff; }
+
+        .wh-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .wh-card { position: relative; overflow: hidden; height: 210px; border-radius: 26px; }
+        .wh-card img { width: 100%; height: 100%; object-fit: cover; transition: .6s ease; }
+        .wh-card:hover img { transform: scale(1.08); }
+        .wh-card .overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,33,29,0) 35%, rgba(10,33,29,.92)); display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; }
+        .wh-card .overlay h4 { color: #fff; font-family: var(--head); font-weight: 700; font-size: 20px; }
+        .wh-card .overlay span { color: #ffc7b3; font-size: 13px; font-weight: 600; }
+
+        .budget-row { display: flex; flex-direction: column; gap: 18px; }
+        .budget-item h5 { display: flex; justify-content: space-between; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+        .budget-item h5 span { color: var(--sub); }
+        .budget-track { width: 100%; height: 10px; background: var(--sage); border-radius: 20px; overflow: hidden; }
+        .budget-fill { height: 100%; background: linear-gradient(90deg, var(--pcolor), var(--hcolor)); border-radius: 20px; }
+
+        .student-list { display: flex; flex-direction: column; gap: 10px; }
+        .student-row { display: flex; align-items: center; gap: 14px; padding: 12px; border-radius: 20px; border: 1px solid var(--line); }
+        .student-row img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+        .s-info { flex: 1; min-width: 0; }
+        .s-info h5 { font-size: 14.5px; font-weight: 700; }
+        .s-info p { font-size: 12.5px; color: var(--sub); }
+
+        @media (max-width: 1250px) { .bento .span-8, .bento .span-4, .bento .span-6 { grid-column: span 12; } }
+        @media (max-width: 1100px) { .stat-row, .wh-grid { grid-template-columns: repeat(2, 1fr); } .quick-actions { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 900px) {
+            .sidebar { position: fixed; inset: 0 auto 0 0; transform: translateX(-120%); transition: transform .3s ease; z-index: 9999; width: 285px !important; }
+            .sidebar.vis { transform: translateX(0); box-shadow: 10px 0 40px rgba(0,0,0,.3); }
+            .sidebar.collapsed .nav-group-label, .sidebar.collapsed .side-nav button span.label, .sidebar.collapsed .sidebar-footer .who, .sidebar.collapsed .sidebar-logo a img { display: initial; }
+            .sidebar-logo { width: 100%; }
+            .rail-toggle { display: none; }
+            .sidebar-logo .adminclose { display: block; }
+            .topbar > .topbar-row2 > h2, .search-box { display: none; }
+            .topbar { padding: 12px 16px; }
+            .topbarimgcontainer { display: flex; }
+            .content-scroll { padding: 18px 16px 34px; }
+            .fleet-grid { grid-template-columns: 1fr; }
+            .hello { padding: 26px 22px; } .hello h1 { font-size: 28px; }
+        }
+        @media (max-width: 560px) {
+            .stat-row, .wh-grid, .quick-actions { grid-template-columns: 1fr; }
+            .topbar-date { display: none; }
+            .topbar-right { gap: 8px; }
+            .icon-btn { width: 38px; height: 38px; }
+            .panel { padding: 20px 16px; }
+        }
+        @media (prefers-reduced-motion: reduce) { .view.active, .bar { animation: none; } }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="sidebar-logo">
+                <a href="index.html"><img src="./src/logo.webp" alt="Vitalyn Logo"></a>
+                <span class="material-symbols-outlined adminclose">close</span>
+            </div>
+            <button class="rail-toggle" id="railToggle" aria-label="Collapse sidebar"><span class="material-symbols-outlined">chevron_left</span></button>
+        </div>
+
+        <div class="sidebar-scroll">
+            <span class="nav-group-label">Studio management</span>
+            <nav class="side-nav">
+                <button class="active" onclick="showView('overview', this)"><span class="material-symbols-outlined">dashboard</span><span class="label">Overview</span></button>
+                <button onclick="showView('memberships', this)"><span class="material-symbols-outlined">card_membership</span><span class="label">Memberships</span></button>
+                <button onclick="showView('coaches', this)"><span class="material-symbols-outlined">sports_gymnastics</span><span class="label">Coaches</span></button>
+                <button onclick="showView('classes', this)"><span class="material-symbols-outlined">fitness_center</span><span class="label">Classes</span></button>
+                <button onclick="showView('members', this)"><span class="material-symbols-outlined">groups</span><span class="label">Members</span></button>
+                <button class="logoutbtn"><span class="material-symbols-outlined">logout</span><span class="label">Logout</span></button>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <img src="./src/img16.webp"  alt="Admin">
+            <div class="who">
+                <h4 id="username">Meera Nair</h4>
+                <span>Studio Manager</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ================= MAIN ================= -->
+    <main class="main">
+
+        <div class="topbar">
+            <div class="topbar-row1">
+                <div class="breadcrumb">
+                    <span>Dashboard</span><span class="material-symbols-outlined" style="font-size:16px;">chevron_right</span>
+                    <span class="current" id="crumbTitle">Overview</span>
+                </div>
+                <span class="topbar-date" id="topbarDate"></span>
+            </div>
+
+            <div class="topbar-row2">
+                <div class="topbarimgcontainer">
+                    <span class="material-symbols-outlined topbarmenu" role="button" aria-label="Open menu" tabindex="0">menu</span>
+                </div>
+                <h2 id="topbarTitle">Overview</h2>
+                <div class="topbar-right">
+                    <div class="search-box">
+                        <span class="material-symbols-outlined errorpage">search</span>
+                        <input type="text" placeholder="Search members, coaches..." aria-label="Search">
+                    </div>
+                    <div class="icon-btn errorpage" role="button" aria-label="Notifications"><span class="material-symbols-outlined">notifications</span><span class="dot"></span></div>
+                    <div class="icon-btn errorpage" role="button" aria-label="Messages"><span class="material-symbols-outlined">mail</span></div>
+                    <div class="topbar-avatar"><img src="./src/img16.webp"  alt="Admin"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-scroll">
+
+            <!-- ========== 1. OVERVIEW ========== -->
+            <div class="view active" id="overview">
+
+                <div class="hello">
+                    <div>
+                        <h1 id="greet">Good morning, Meera</h1>
+                        <p>Here is how the studio is doing today.</p>
+                    </div>
+                    <div class="hello-stats">
+                        <div><b>18</b><span>Classes today</span></div>
+                        <div><b>342</b><span>Check-ins so far</span></div>
+                        <div><b>9</b><span>Trial visits</span></div>
+                    </div>
+                </div>
+
+                <div class="stat-row">
+                    <div class="stat-card"><span class="material-symbols-outlined">groups</span>
+                        <div class="stat-info"><h2>5,842</h2><p>Active Members</p><span class="delta">+3.2% this month</span></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">sports_gymnastics</span>
+                        <div class="stat-info"><h2>45</h2><p>Coaches &amp; Staff</p><span class="delta">+2 new this month</span></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">event_available</span>
+                        <div class="stat-info"><h2>42</h2><p>Weekly Classes</p><span class="delta">88% average fill</span></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">hourglass_top</span>
+                        <div class="stat-info"><h2>64</h2><p>Trials To Follow Up</p><span class="delta down">Call today</span></div></div>
+                </div>
+
+                <div class="panel">
+                    <h3>Quick Actions</h3>
+                    <div class="quick-actions">
+                        <button class="errorpage"><span class="material-symbols-outlined">person_add</span><span class="t">Add Member</span></button>
+                        <button class="errorpage"><span class="material-symbols-outlined">event_note</span><span class="t">Book Trial</span></button>
+                        <button class="errorpage"><span class="material-symbols-outlined">sports_gymnastics</span><span class="t">Add Coach</span></button>
+                        <button class="errorpage"><span class="material-symbols-outlined">summarize</span><span class="t">Generate Report</span></button>
+                    </div>
+                </div>
+
+                <div class="bento">
+                    <div class="panel span-8">
+                        <div class="panel-head"><h3>Monthly Check-ins</h3><span class="topbar-date">Last 6 months</span></div>
+                        <div class="bar-chart">
+                            <div class="bar-col"><div class="bar" style="height:52%;"></div><span>May</span></div>
+                            <div class="bar-col"><div class="bar" style="height:60%;animation-delay:.08s"></div><span>Jun</span></div>
+                            <div class="bar-col"><div class="bar" style="height:57%;animation-delay:.16s"></div><span>Jul</span></div>
+                            <div class="bar-col"><div class="bar" style="height:72%;animation-delay:.24s"></div><span>Aug</span></div>
+                            <div class="bar-col"><div class="bar" style="height:80%;animation-delay:.32s"></div><span>Sep</span></div>
+                            <div class="bar-col"><div class="bar hl" style="height:100%;animation-delay:.4s"></div><span>Oct</span></div>
+                        </div>
+                    </div>
+
+                    <div class="panel span-4">
+                        <h3>Members By Plan</h3>
+                        <div class="donut-wrap">
+                            <div class="donut" role="img" aria-label="Core 42 percent, Plus 31 percent, Elite 17 percent, Trial 10 percent"></div>
+                            <div class="donut-legend">
+                                <div class="leg-item"><span class="dot" style="background:var(--pcolor)"></span>Core (42%)</div>
+                                <div class="leg-item"><span class="dot" style="background:var(--dark)"></span>Plus (31%)</div>
+                                <div class="leg-item"><span class="dot" style="background:#7fa595"></span>Elite (17%)</div>
+                                <div class="leg-item"><span class="dot" style="background:#d9e3d6"></span>Trial (10%)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel span-8">
+                        <div class="panel-head"><h3>Recent Sign-ups</h3><button class="d-btn errorpage">View All</button></div>
+                        <table>
+                            <thead><tr><th>Reference</th><th>Plan</th><th>Latest Update</th><th>Status</th></tr></thead>
+                            <tbody>
+                                <tr><td class="cell-item">#MEM-2201</td><td>Plus, Quarterly</td><td>Payment received</td><td><span class="badge active">Active</span></td></tr>
+                                <tr><td class="cell-item">#MEM-2198</td><td>Core, Monthly</td><td>Trial class booked</td><td><span class="badge transit">Trial</span></td></tr>
+                                <tr><td class="cell-item">#MEM-2194</td><td>Elite, Monthly</td><td>Awaiting payment</td><td><span class="badge pending">Pending</span></td></tr>
+                                <tr><td class="cell-item">#MEM-2189</td><td>Plus, Monthly</td><td>Assessment completed</td><td><span class="badge active">Active</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="panel span-4">
+                        <h3>Today's Schedule</h3>
+                        <div class="event-list">
+                            <div class="event-item"><div class="event-date"><strong>6:00</strong><span>AM</span></div><div class="event-info"><h5>Sunrise Yoga Flow</h5><p>Studio B, Ravi Shankar</p></div></div>
+                            <div class="event-item"><div class="event-date"><strong>9:30</strong><span>AM</span></div><div class="event-info"><h5>Strength Circuit</h5><p>Main Floor, Aravind Iyer</p></div></div>
+                            <div class="event-item"><div class="event-date"><strong>5:30</strong><span>PM</span></div><div class="event-info"><h5>HIIT Blast</h5><p>Studio A, Sana Fatima</p></div></div>
+                            <div class="event-item"><div class="event-date"><strong>7:00</strong><span>PM</span></div><div class="event-info"><h5>Pilates &amp; Core</h5><p>Studio B, Kavya Reddy</p></div></div>
+                        </div>
+                    </div>
+
+                    <div class="panel span-6">
+                        <h3>Studio Health</h3>
+                        <table>
+                            <tbody>
+                                <tr><td>Average Class Fill Rate</td><td style="text-align:right;font-weight:800;">88%</td></tr>
+                                <tr><td>Member Retention (12 months)</td><td style="text-align:right;font-weight:800;">96%</td></tr>
+                                <tr><td>Coaches On Duty Today</td><td style="text-align:right;font-weight:800;">31 / 45</td></tr>
+                                <tr><td>Feedback Awaiting Reply</td><td style="text-align:right;font-weight:800;">5</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="panel span-6">
+                        <h3>Recent Activity</h3>
+                        <div class="timeline">
+                            <div class="t-item"><div class="t-dot"><span class="material-symbols-outlined">task_alt</span></div><div class="t-body"><h5>Membership #MEM-2201 activated</h5><p>Divya Krishnan, 10 minutes ago</p></div></div>
+                            <div class="t-item"><div class="t-dot"><span class="material-symbols-outlined">person_add</span></div><div class="t-body"><h5>New coach onboarded: Kavya Reddy</h5><p>HR Desk, 2 hours ago</p></div></div>
+                            <div class="t-item"><div class="t-dot"><span class="material-symbols-outlined">event</span></div><div class="t-body"><h5>Weekend schedule finalised</h5><p>Front Desk, 5 hours ago</p></div></div>
+                            <div class="t-item"><div class="t-dot"><span class="material-symbols-outlined">rate_review</span></div><div class="t-body"><h5>Feedback ticket #FB-045 received</h5><p>Member Care, Yesterday</p></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== 2. MEMBERSHIPS ========== -->
+            <div class="view" id="memberships">
+                <div class="stat-row">
+                    <div class="stat-card"><span class="material-symbols-outlined">card_membership</span><div class="stat-info"><h2>5,842</h2><p>Active Memberships</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">move_to_inbox</span><div class="stat-info"><h2>58</h2><p>New This Week</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">autorenew</span><div class="stat-info"><h2>112</h2><p>Renewals Due</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">payments</span><div class="stat-info"><h2>12</h2><p>Payments Pending</p></div></div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-head"><h3>All Memberships</h3><button class="d-btn errorpage">New Membership</button></div>
+                    <div class="filter-chips" id="memFilters" style="margin-bottom:18px;">
+                        <button class="active" data-f="all">All</button>
+                        <button data-f="active">Active</button>
+                        <button data-f="trial">Trial</button>
+                        <button data-f="pending">Pending</button>
+                        <button data-f="expiring">Expiring</button>
+                    </div>
+                    <table>
+                        <thead><tr><th>Reference</th><th>Member</th><th>Plan</th><th>Handled By</th><th>Joined</th><th>Status</th></tr></thead>
+                        <tbody id="memBody">
+                            <tr data-s="active"><td>#MEM-2201</td><td>Rahul Menon</td><td>Plus, Quarterly</td><td>Divya Krishnan</td><td>Oct 24</td><td><span class="badge active">Active</span></td></tr>
+                            <tr data-s="trial"><td>#MEM-2198</td><td>Sneha Pillai</td><td>Core, Monthly</td><td>Priya Suresh</td><td>Oct 23</td><td><span class="badge transit">Trial</span></td></tr>
+                            <tr data-s="pending"><td>#MEM-2194</td><td>Arjun Nair</td><td>Elite, Monthly</td><td>Karthik Raja</td><td>Oct 23</td><td><span class="badge pending">Pending</span></td></tr>
+                            <tr data-s="active"><td>#MEM-2189</td><td>Meghana Rao</td><td>Plus, Monthly</td><td>Meera Nair</td><td>Oct 22</td><td><span class="badge active">Active</span></td></tr>
+                            <tr data-s="expiring"><td>#MEM-2183</td><td>Vikram Das</td><td>Core, Monthly</td><td>Karthik Raja</td><td>Sep 28</td><td><span class="badge expiring">Expiring</span></td></tr>
+                        </tbody>
+                    </table>
+                    <div class="pagination">
+                        <button class="errorpage">&lt;</button><button class="active errorpage">1</button><button class="errorpage">2</button><button class="errorpage">3</button><button class="errorpage">&gt;</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== 3. COACHES ========== -->
+            <div class="view" id="coaches">
+                <div class="stat-row">
+                    <div class="stat-card"><span class="material-symbols-outlined">sports_gymnastics</span><div class="stat-info"><h2>45</h2><p>Total Coaches</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">exercise</span><div class="stat-info"><h2>22</h2><p>Personal Trainers</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">nutrition</span><div class="stat-info"><h2>6</h2><p>Dietitians</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">event_busy</span><div class="stat-info"><h2>3</h2><p>On Leave</p></div></div>
+                </div>
+
+                <div class="bento">
+                    <div class="panel span-8">
+                        <div class="panel-head">
+                            <h3>Coach Roster</h3>
+                            <div class="filter-chips"><button class="active errorpage">All</button><button class="errorpage">Strength</button><button class="errorpage">Yoga</button><button class="errorpage">Nutrition</button></div>
+                        </div>
+                        <div class="fleet-grid">
+                            <div class="fleet-card"><img src="./src/img14.webp"  alt="Aravind Iyer">
+                                <div class="fleet-card-body"><h4>Aravind Iyer</h4><p>Head Strength Coach, 6 classes</p><span class="badge active">On Duty</span></div>
+                                <div class="contact-row"><span class="material-symbols-outlined errorpage">mail</span><span class="material-symbols-outlined errorpage">call</span></div></div>
+                            <div class="fleet-card"><img src="./src/img16.webp"  alt="Meera Nair">
+                                <div class="fleet-card-body"><h4>Meera Nair</h4><p>Clinical Dietitian, 5 clinics</p><span class="badge active">On Duty</span></div>
+                                <div class="contact-row"><span class="material-symbols-outlined errorpage">mail</span><span class="material-symbols-outlined errorpage">call</span></div></div>
+                            <div class="fleet-card"><img src="./src/img17.webp"  alt="Ravi Shankar">
+                                <div class="fleet-card-body"><h4>Ravi Shankar</h4><p>Yoga &amp; Mobility Lead, 4 classes</p><span class="badge maintenance">On Leave</span></div>
+                                <div class="contact-row"><span class="material-symbols-outlined errorpage">mail</span><span class="material-symbols-outlined errorpage">call</span></div></div>
+                            <div class="fleet-card"><img src="./src/img18.webp"  alt="Sana Fatima">
+                                <div class="fleet-card-body"><h4>Sana Fatima</h4><p>HIIT &amp; Cardio Coach, 5 classes</p><span class="badge active">On Duty</span></div>
+                                <div class="contact-row"><span class="material-symbols-outlined errorpage">mail</span><span class="material-symbols-outlined errorpage">call</span></div></div>
+                        </div>
+                    </div>
+
+                    <div class="panel span-4">
+                        <h3>On Leave Today</h3>
+                        <div class="event-list">
+                            <div class="event-item"><div class="event-date" style="background:var(--pcolor)"><strong>26</strong><span>Oct</span></div><div class="event-info"><h5>Ravi Shankar</h5><p>Yoga, back Oct 30</p></div></div>
+                            <div class="event-item"><div class="event-date" style="background:var(--pcolor)"><strong>26</strong><span>Oct</span></div><div class="event-info"><h5>Sameer Qureshi</h5><p>Strength, back Oct 28</p></div></div>
+                            <div class="event-item"><div class="event-date" style="background:var(--pcolor)"><strong>27</strong><span>Oct</span></div><div class="event-info"><h5>Fatima Sheikh</h5><p>Pilates, back Oct 31</p></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== 4. CLASSES ========== -->
+            <div class="view" id="classes">
+                <div class="stat-row">
+                    <div class="stat-card"><span class="material-symbols-outlined">fitness_center</span><div class="stat-info"><h2>8</h2><p>Class Types</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">event_available</span><div class="stat-info"><h2>42</h2><p>Weekly Sessions</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">event_seat</span><div class="stat-info"><h2>88%</h2><p>Average Fill Rate</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">meeting_room</span><div class="stat-info"><h2>4</h2><p>Studios And Zones</p></div></div>
+                </div>
+
+                <div class="panel">
+                    <h3>Popular Classes</h3>
+                    <div class="wh-grid">
+                        <div class="wh-card"><img src="./src/image_13.webp" alt="HIIT class"><div class="overlay"><h4>HIIT Blast</h4><span>1,240 monthly attendees</span></div></div>
+                        <div class="wh-card"><img src="./src/image_16.webp" alt="Strength circuit"><div class="overlay"><h4>Strength Circuit</h4><span>1,020 monthly attendees</span></div></div>
+                        <div class="wh-card"><img src="./src/image_18.webp" alt="Yoga flow"><div class="overlay"><h4>Yoga Flow</h4><span>860 monthly attendees</span></div></div>
+                    </div>
+                </div>
+
+                <div class="bento">
+                    <div class="panel span-8">
+                        <h3>Class Snapshot</h3>
+                        <table>
+                            <thead><tr><th>Class</th><th>Focus</th><th>Lead Coach</th><th>Status</th></tr></thead>
+                            <tbody>
+                                <tr><td>HIIT Blast</td><td>Cardio and fat burn</td><td>Sana Fatima</td><td><span class="badge active">Almost Full</span></td></tr>
+                                <tr><td>Strength Circuit</td><td>Full-body strength</td><td>Aravind Iyer</td><td><span class="badge active">Good Fill</span></td></tr>
+                                <tr><td>Yoga Flow</td><td>Mobility and calm</td><td>Ravi Shankar</td><td><span class="badge maintenance">Coach Needed</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="panel span-4">
+                        <h3>Class Fill Rate</h3>
+                        <div class="budget-row">
+                            <div class="budget-item"><h5>HIIT Blast <span>96%</span></h5><div class="budget-track"><div class="budget-fill" style="width:96%"></div></div></div>
+                            <div class="budget-item"><h5>Strength Circuit <span>89%</span></h5><div class="budget-track"><div class="budget-fill" style="width:89%"></div></div></div>
+                            <div class="budget-item"><h5>Yoga Flow <span>81%</span></h5><div class="budget-track"><div class="budget-fill" style="width:81%"></div></div></div>
+                            <div class="budget-item"><h5>Pilates &amp; Core <span>74%</span></h5><div class="budget-track"><div class="budget-fill" style="width:74%"></div></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== 5. MEMBERS ========== -->
+            <div class="view" id="members">
+                <div class="stat-row">
+                    <div class="stat-card"><span class="material-symbols-outlined">groups</span><div class="stat-info"><h2>5,842</h2><p>Total Members</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">person_add</span><div class="stat-info"><h2>248</h2><p>Joined This Month</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">emoji_events</span><div class="stat-info"><h2>420</h2><p>Goals Achieved</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">support_agent</span><div class="stat-info"><h2>21</h2><p>Open Requests</p></div></div>
+                </div>
+
+                <div class="bento">
+                    <div class="panel span-8">
+                        <div class="panel-head"><h3>Member Directory</h3><button class="d-btn errorpage">Add Member</button></div>
+                        <div class="filter-chips" style="margin-bottom:18px;"><button class="active errorpage">All</button><button class="errorpage">Elite</button><button class="errorpage">New Joiners</button><button class="errorpage">Streak 30+</button></div>
+                        <table>
+                            <thead><tr><th>Member</th><th>Email</th><th>Plan</th><th>Streak</th></tr></thead>
+                            <tbody>
+                                <tr><td class="cell-item">Priya Sharma</td><td>priya.s@vitalyn.com</td><td>Plus, Quarterly</td><td>42 days</td></tr>
+                                <tr><td class="cell-item">Karthik Raj</td><td>karthik.r@vitalyn.com</td><td>Elite, Monthly</td><td>28 days</td></tr>
+                                <tr><td class="cell-item">Ananya Das</td><td>ananya.d@vitalyn.com</td><td>Core, Monthly</td><td>15 days</td></tr>
+                                <tr><td class="cell-item">Vikram Iyer</td><td>vikram.i@vitalyn.com</td><td>Plus, Monthly</td><td>9 days</td></tr>
+                            </tbody>
+                        </table>
+                        <div class="pagination"><button class="errorpage">&lt;</button><button class="active errorpage">1</button><button class="errorpage">2</button><button class="errorpage">3</button><button class="errorpage">&gt;</button></div>
+                    </div>
+
+                    <div class="panel span-4">
+                        <h3>Open Requests</h3>
+                        <div class="student-list">
+                            <div class="student-row"><img src="./src/team-1.webp" alt="Member"><div class="s-info"><h5>Billing Question</h5><p>Priya Sharma, #REQ-1042</p></div><span class="badge pending">Open</span></div>
+                            <div class="student-row"><img src="./src/team-2.webp"  alt="Member"><div class="s-info"><h5>Change Class Slot</h5><p>Karthik Raj, #REQ-1039</p></div><span class="badge transit">In Progress</span></div>
+                            <div class="student-row"><img src="./src/team-3.webp"  alt="Member"><div class="s-info"><h5>Freeze Membership</h5><p>Ananya Das, #REQ-1035</p></div><span class="badge pending">Open</span></div>
+                            <div class="student-row"><img src="./src/team-5.webp"  alt="Member"><div class="s-info"><h5>Locker Request</h5><p>Vikram Iyer, #REQ-1031</p></div><span class="badge active">Resolved</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        const topbarmenu = document.querySelector(".topbarmenu");
+        const adminclose = document.querySelector(".adminclose");
+        const sidebar = document.querySelector(".sidebar");
+        const railToggle = document.querySelector("#railToggle");
+
+        // ----- Sidebar -----
+        topbarmenu.addEventListener("click", () => sidebar.classList.toggle("vis"));
+        topbarmenu.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); sidebar.classList.toggle("vis"); } });
+        adminclose.addEventListener("click", () => sidebar.classList.remove("vis"));
+        railToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("collapsed");
+            railToggle.querySelector(".material-symbols-outlined").textContent = sidebar.classList.contains("collapsed") ? "chevron_right" : "chevron_left";
+        });
+
+        // ----- Logout -----
+        document.querySelector(".logoutbtn").addEventListener("click", () => { window.location.href = "index.html"; });
+
+        // ----- Username from login -----
+        const username = document.querySelector("#username");
+        let email = null;
+        try { email = localStorage.getItem("useremail"); } catch (e) { /* storage unavailable */ }
+        if (email) username.textContent = email.split("@")[0];
+
+        // ----- Greeting -----
+        const hr = new Date().getHours();
+        const part = hr < 12 ? "Good morning" : hr < 17 ? "Good afternoon" : "Good evening";
+        document.getElementById("greet").textContent = part + ", " + username.textContent.split(" ")[0];
+
+        // ----- Buttons that go to the coming-soon page -----
+        document.querySelectorAll(".errorpage").forEach((el) => el.addEventListener("click", () => { window.location.href = "404.html"; }));
+
+        // ----- View switching -----
+        const titles = { overview: "Overview", memberships: "Memberships", coaches: "Coaches", classes: "Classes", members: "Members" };
+        function showView(id, btn) {
+            document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
+            document.getElementById(id).classList.add("active");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            document.querySelectorAll(".side-nav button").forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            document.getElementById("topbarTitle").innerText = titles[id];
+            document.getElementById("crumbTitle").innerText = titles[id];
+            sidebar.classList.remove("vis");
+        }
+
+        // ----- Memberships filter (working) -----
+        const memBtns = document.querySelectorAll("#memFilters button");
+        memBtns.forEach((b) => b.addEventListener("click", () => {
+            memBtns.forEach((x) => x.classList.remove("active"));
+            b.classList.add("active");
+            document.querySelectorAll("#memBody tr").forEach((r) => r.classList.toggle("hide", b.dataset.f !== "all" && r.dataset.s !== b.dataset.f));
+        }));
+
+        // ----- Live date -----
+        document.getElementById("topbarDate").textContent = new Date().toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric", year: "numeric" });
+    </script>
+
+</body>
+
+</html> 

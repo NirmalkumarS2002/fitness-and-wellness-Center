@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Vitalyn | Member Dashboard</title>
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..800&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --pcolor: #e8552d;
+            --hcolor: #f08a63;
+            --dark: #10302b;
+            --pine2: #1b4a41;
+            --ink: #16231f;
+            --sub: #66756f;
+            --line: #e3e8e1;
+            --bg: #f5f2ec;
+            --card: #ffffff;
+            --sage: #e6eee3;
+            --good: #2e9e63;
+            --warn: #c78a1c;
+            --bad: #c8341a;
+            --head: "Bricolage Grotesque", sans-serif;
+        }
+
+        body { background: var(--bg); font-family: "DM Sans", sans-serif; display: flex; overflow-x: hidden; min-height: 100vh; color: var(--ink); }
+        input, button { font-family: inherit; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid var(--pcolor); outline-offset: 2px; }
+
+        /* ================= SIDEBAR ================= */
+        .sidebar { width: 262px; flex-shrink: 0; background: var(--dark); display: flex; flex-direction: column; height: 100vh; position: sticky; top: 0; transition: width .3s ease; }
+        .sidebar.collapsed { width: 84px; }
+        .sidebar.collapsed .nav-group-label,
+        .sidebar.collapsed .side-nav button span.label,
+        .sidebar.collapsed .sidebar-footer .who,
+        .sidebar.collapsed .sidebar-logo a img { display: none; }
+        .sidebar.collapsed .sidebar-footer, .sidebar.collapsed .side-nav button { justify-content: center; }
+        .sidebar.collapsed .sidebar-top { justify-content: center; }
+
+        .sidebar-top { display: flex; align-items: center; justify-content: space-between; padding: 22px 18px; }
+        .sidebar-logo { display: flex; align-items: center; justify-content: space-between; }
+        .sidebar-logo a { display: flex; align-items: center; }
+        .sidebar-logo a img { width: clamp(130px, 14vw, 160px); }
+        .sidebar-logo .adminclose { color: #fff; display: none; cursor: pointer; }
+        .rail-toggle { background: #ffffff14; border: none; color: #bcd0c8; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+        .rail-toggle:hover { color: #fff; background: #ffffff26; }
+
+        .sidebar-scroll { flex: 1; overflow-y: auto; padding: 10px 16px 20px; }
+        .nav-group-label { font-size: 12px; color: #7fa093; padding: 0 12px; margin: 10px 0 12px; font-weight: 700; }
+        .side-nav { display: flex; flex-direction: column; gap: 6px; }
+        .side-nav button { display: flex; align-items: center; gap: 14px; width: 100%; padding: 13px 16px; border: none; background: transparent; color: #bcd0c8; font-size: 15px; font-weight: 600; border-radius: 50px; cursor: pointer; text-align: left; transition: .3s ease; }
+        .side-nav button .material-symbols-outlined { font-size: 22px; flex-shrink: 0; }
+        .side-nav button:hover { background: #ffffff14; color: #fff; }
+        .side-nav button.active { background: var(--pcolor); color: #fff; box-shadow: 0 8px 20px rgba(232,85,45,.35); }
+        .side-nav .logoutbtn { margin-top: 14px; border: 1px solid #ffffff26; }
+
+        .sidebar-footer { display: flex; align-items: center; gap: 12px; margin: 0 16px 18px; padding: 12px; background: #ffffff10; border-radius: 22px; }
+        .sidebar-footer img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid var(--pcolor); }
+        .sidebar-footer h4 { color: #fff; font-size: 14px; font-weight: 700; text-transform: capitalize; }
+        .sidebar-footer span { color: #9db8ad; font-size: 12px; }
+
+        /* ================= MAIN ================= */
+        .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+        .topbar { background: rgba(245,242,236,.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); padding: 14px 30px; display: flex; flex-direction: column; gap: 8px; position: sticky; top: 0; z-index: 50; }
+        .topbar-row1 { display: flex; justify-content: space-between; align-items: center; }
+        .breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--sub); font-weight: 600; }
+        .breadcrumb .current { color: var(--pcolor); font-weight: 700; }
+        .topbar-date { font-size: 13px; color: var(--sub); font-weight: 600; }
+        .topbar-row2 { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+        .topbar h2 { font-family: var(--head); font-weight: 700; font-size: 30px; letter-spacing: -.8px; }
+        .topbar-right { display: flex; align-items: center; gap: 12px; }
+        .search-box { display: flex; align-items: center; gap: 8px; background: #fff; border: 1.5px solid var(--line); border-radius: 50px; padding: 10px 18px; }
+        .search-box input { border: none; background: transparent; outline: none; font-size: 14px; width: 190px; color: var(--ink); }
+        .search-box input:focus-visible { outline: none; }
+        .search-box:focus-within { border-color: var(--pcolor); }
+        .search-box > .material-symbols-outlined { color: var(--sub); font-size: 20px; cursor: pointer; }
+        .icon-btn { position: relative; color: var(--dark); cursor: pointer; background: #fff; border: 1.5px solid var(--line); width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: .25s ease; }
+        .icon-btn:hover { border-color: var(--pcolor); color: var(--pcolor); }
+        .icon-btn .dot { position: absolute; top: 9px; right: 10px; width: 8px; height: 8px; border-radius: 50%; background: var(--pcolor); border: 2px solid #fff; }
+        .topbar-avatar img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; border: 2px solid var(--pcolor); display: block; }
+        .topbarimgcontainer { display: none; align-items: center; gap: 14px; }
+        .topbarimgcontainer .topbarmenu { font-size: 26px; color: var(--ink); cursor: pointer; }
+
+        .content-scroll { padding: 24px 30px 44px; display: flex; flex-direction: column; gap: 24px; }
+        .view { display: none; flex-direction: column; gap: 24px; }
+        .view.active { display: flex; animation: viewIn .45s both; }
+        @keyframes viewIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+
+        .d-btn { padding: 11px 22px; background: var(--dark); border: 1.5px solid var(--dark); color: #fff; cursor: pointer; transition: .3s ease; font-size: 14px; font-weight: 700; border-radius: 50px; white-space: nowrap; }
+        .d-btn:hover { background: var(--pcolor); border-color: var(--pcolor); }
+        .d-btn.sm { padding: 8px 18px; font-size: 13px; }
+        .d-btn.booked { background: transparent; color: var(--good); border-color: var(--good); }
+        .d-btn.booked:hover { background: var(--bad); border-color: var(--bad); color: #fff; }
+        .d-btn.ghost { background: transparent; color: var(--dark); }
+        .d-btn.ghost:hover { color: #fff; }
+
+        .panel { background: var(--card); border: 1px solid var(--line); border-radius: 26px; padding: 26px; overflow-x: auto; }
+        .panel h3 { font-family: var(--head); font-weight: 700; font-size: 20px; letter-spacing: -.4px; margin-bottom: 18px; }
+        .panel-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; gap: 12px; flex-wrap: wrap; }
+        .panel-head h3 { margin-bottom: 0; }
+        .filter-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+        .filter-chips button { padding: 8px 18px; border-radius: 40px; border: 1.5px solid var(--line); background: transparent; font-size: 13px; font-weight: 700; color: var(--sub); cursor: pointer; transition: .2s ease; }
+        .filter-chips button.active, .filter-chips button:hover { background: var(--dark); border-color: var(--dark); color: #fff; }
+
+        /* greeting banner */
+        .hello { position: relative; overflow: hidden; background: linear-gradient(110deg, var(--dark) 20%, var(--pine2)); color: #fff; border-radius: 30px; padding: 34px 38px; display: flex; justify-content: space-between; align-items: center; gap: 24px; flex-wrap: wrap; }
+        .hello::before { content: ""; position: absolute; right: -60px; top: -80px; width: 260px; height: 260px; border-radius: 50%; background: var(--pcolor); opacity: .9; }
+        .hello > * { position: relative; }
+        .hello h1 { font-family: var(--head); font-size: 36px; letter-spacing: -1px; margin-bottom: 6px; text-transform: capitalize; }
+        .hello p { color: #cfe0d9; font-size: 16px; }
+        .hello-stats { display: flex; gap: 14px; flex-wrap: wrap; }
+        .hello-stats div { background: #ffffff1f; backdrop-filter: blur(6px); border-radius: 20px; padding: 14px 22px; min-width: 120px; }
+        .hello-stats b { display: block; font-family: var(--head); font-size: 28px; letter-spacing: -1px; }
+        .hello-stats span { font-size: 13px; color: #e6f0eb; }
+
+        .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 22px; }
+        .bento .span-8 { grid-column: span 8; } .bento .span-4 { grid-column: span 4; } .bento .span-6 { grid-column: span 6; }
+
+        .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .stat-card { background: var(--card); border: 1px solid var(--line); border-radius: 26px; padding: 22px; display: flex; align-items: center; gap: 16px; transition: .3s ease; }
+        .stat-card:hover { border-color: var(--pcolor); transform: translateY(-3px); }
+        .stat-card > .material-symbols-outlined { background: var(--sage); color: var(--dark); width: 54px; height: 54px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; transition: .3s ease; }
+        .stat-card:hover > .material-symbols-outlined { background: var(--pcolor); color: #fff; }
+        .stat-info { display: flex; flex-direction: column; gap: 3px; }
+        .stat-card h2 { font-family: var(--head); font-weight: 700; font-size: 30px; letter-spacing: -1px; line-height: 1; }
+        .stat-card p { font-size: 14px; color: var(--sub); font-weight: 600; }
+        .delta { font-size: 12.5px; color: var(--good); font-weight: 700; }
+        .delta.down { color: var(--bad); }
+
+        .quick-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+        .quick-actions button { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-radius: 20px; border: 1.5px dashed #10302b40; background: transparent; cursor: pointer; transition: .25s ease; text-align: left; }
+        .quick-actions button:hover { border-color: var(--pcolor); border-style: solid; background: #e8552d0d; }
+        .quick-actions .material-symbols-outlined { color: var(--pcolor); font-size: 26px; }
+        .quick-actions span.t { font-size: 14px; font-weight: 700; color: var(--ink); }
+
+        .bar-chart { display: flex; align-items: flex-end; gap: 16px; height: 210px; padding-top: 10px; }
+        .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; height: 100%; justify-content: flex-end; }
+        .bar { width: 62%; background: linear-gradient(180deg, #3b7a6c, var(--dark)); border-radius: 12px 12px 4px 4px; min-height: 8px; transform-origin: bottom; animation: grow .9s cubic-bezier(.2,.8,.2,1) both; }
+        .bar.hl { background: linear-gradient(180deg, var(--hcolor), var(--pcolor)); }
+        @keyframes grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+        .bar-col span { font-size: 13px; color: var(--sub); font-weight: 600; }
+
+        .donut-wrap { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+        .donut { width: 150px; height: 150px; border-radius: 50%; flex-shrink: 0; background: conic-gradient(var(--pcolor) 0 75%, #d9e3d6 75% 100%); display: flex; align-items: center; justify-content: center; position: relative; }
+        .donut::after { content: ""; position: absolute; width: 106px; height: 106px; background: var(--card); border-radius: 50%; }
+        .donut b { position: relative; z-index: 1; font-family: var(--head); font-size: 30px; letter-spacing: -1px; }
+        .donut-legend { display: flex; flex-direction: column; gap: 11px; }
+        .leg-item { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; }
+        .leg-item .dot { width: 12px; height: 12px; border-radius: 50%; }
+
+        .timeline { display: flex; flex-direction: column; }
+        .t-item { display: flex; gap: 14px; padding-bottom: 22px; position: relative; }
+        .t-item:not(:last-child)::before { content: ""; position: absolute; left: 18px; top: 40px; bottom: 2px; width: 2px; background: var(--line); }
+        .t-dot { width: 38px; height: 38px; border-radius: 50%; background: var(--sage); color: var(--dark); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .t-dot .material-symbols-outlined { font-size: 19px; }
+        .t-body h5 { font-size: 15px; font-weight: 700; margin-bottom: 3px; }
+        .t-body p { font-size: 13px; color: var(--sub); }
+
+        .event-list { display: flex; flex-direction: column; gap: 10px; }
+        .event-item { display: flex; align-items: center; gap: 14px; padding: 10px; border-radius: 18px; transition: .2s ease; }
+        .event-item:hover { background: var(--bg); }
+        .event-date { background: var(--dark); color: #fff; min-width: 58px; height: 52px; padding: 0 8px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+        .event-date strong { font-size: 15px; font-family: var(--head); line-height: 1.1; white-space: nowrap; }
+        .event-date span { font-size: 11px; opacity: .8; }
+        .event-info h5 { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+        .event-info p { font-size: 13px; color: var(--sub); }
+
+        table { width: 100%; border-collapse: collapse; }
+        thead th { text-align: left; font-size: 13px; color: var(--sub); padding: 10px 14px; border-bottom: 1.5px solid var(--line); font-weight: 700; white-space: nowrap; }
+        tbody td { padding: 15px 14px; font-size: 14.5px; border-bottom: 1px solid #eef1ec; white-space: nowrap; }
+        tbody tr:last-child td { border-bottom: none; }
+        tbody tr { transition: .2s ease; }
+        tbody tr:hover { background: #f8f6f1; }
+        tbody tr.hide { display: none; }
+        .cell-item { font-weight: 700; }
+
+        .badge { padding: 6px 14px; border-radius: 30px; font-size: 12.5px; font-weight: 700; display: inline-block; }
+        .badge.active { background: #2e9e6320; color: #1f7a49; }
+        .badge.transit { background: #e8552d1a; color: #c4401b; }
+        .badge.pending { background: #c78a1c22; color: #8f600c; }
+        .badge.expiring { background: #c8341a1a; color: var(--bad); }
+
+        .wh-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        .wh-card { position: relative; overflow: hidden; height: 210px; border-radius: 26px; background: var(--dark); }
+        .wh-card img { width: 100%; height: 100%; object-fit: cover; transition: .6s ease; }
+        .wh-card:hover img { transform: scale(1.08); }
+        .wh-card .overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,33,29,0) 35%, rgba(10,33,29,.92)); display: flex; flex-direction: column; justify-content: flex-end; padding: 20px; }
+        .wh-card .overlay h4 { color: #fff; font-family: var(--head); font-weight: 700; font-size: 20px; }
+        .wh-card .overlay span { color: #ffc7b3; font-size: 13px; font-weight: 600; }
+
+        .budget-row { display: flex; flex-direction: column; gap: 18px; }
+        .budget-item h5 { display: flex; justify-content: space-between; font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+        .budget-item h5 span { color: var(--sub); }
+        .budget-track { width: 100%; height: 10px; background: var(--sage); border-radius: 20px; overflow: hidden; }
+        .budget-fill { height: 100%; background: linear-gradient(90deg, var(--pcolor), var(--hcolor)); border-radius: 20px; }
+
+        .student-list { display: flex; flex-direction: column; gap: 10px; }
+        .student-row { display: flex; align-items: center; gap: 14px; padding: 12px; border-radius: 20px; border: 1px solid var(--line); }
+        .student-row img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; background: var(--sage); }
+        .s-info { flex: 1; min-width: 0; }
+        .s-info h5 { font-size: 14.5px; font-weight: 700; }
+        .s-info p { font-size: 12.5px; color: var(--sub); }
+
+        /* coach / dietitian card */
+        .coach-card { display: flex; align-items: center; gap: 18px; background: var(--sage); border-radius: 22px; padding: 18px; flex-wrap: wrap; }
+        .coach-card img { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 3px solid #fff; background: #fff; }
+        .coach-card h4 { font-family: var(--head); font-size: 18px; }
+        .coach-card p { font-size: 13px; color: var(--sub); margin-top: 2px; }
+        .coach-card .d-btn { margin-left: auto; }
+
+        /* plan card */
+        .plan-hero { background: linear-gradient(110deg, var(--dark) 25%, var(--pine2)); color: #fff; border-radius: 26px; padding: 30px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; align-items: center; }
+        .plan-hero h3 { color: #fff; font-size: 28px; margin-bottom: 6px; }
+        .plan-hero p { color: #cfe0d9; font-size: 15px; }
+        .plan-hero .price { font-family: var(--head); font-size: 38px; font-weight: 800; letter-spacing: -1px; }
+        .plan-hero .price small { font-family: "DM Sans", sans-serif; font-size: 15px; font-weight: 500; opacity: .75; }
+        .perk-list { list-style: none; display: grid; gap: 12px; }
+        .perk-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 15px; line-height: 1.5; }
+        .perk-list .material-symbols-outlined { color: var(--pcolor); font-size: 22px; }
+
+        /* achievements */
+        .ach-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+        .ach { text-align: center; padding: 18px 10px; border-radius: 22px; border: 1px solid var(--line); }
+        .ach .material-symbols-outlined { width: 54px; height: 54px; border-radius: 50%; background: var(--pcolor); color: #fff; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 28px; }
+        .ach.locked { opacity: .5; }
+        .ach.locked .material-symbols-outlined { background: #cfd8d3; }
+        .ach h5 { font-size: 14px; }
+        .ach p { font-size: 12px; color: var(--sub); margin-top: 3px; }
+
+        .empty { text-align: center; color: var(--sub); padding: 24px 0; font-size: 15px; }
+        .toast { position: fixed; bottom: 26px; left: 50%; transform: translate(-50%, 30px); background: var(--dark); color: #fff; padding: 13px 24px; border-radius: 50px; font-size: 14px; font-weight: 600; opacity: 0; pointer-events: none; transition: .35s ease; z-index: 10000; box-shadow: 0 14px 30px rgba(0,0,0,.25); }
+        .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+        @media (max-width: 1250px) { .bento .span-8, .bento .span-4, .bento .span-6 { grid-column: span 12; } }
+        @media (max-width: 1100px) { .stat-row, .wh-grid { grid-template-columns: repeat(2, 1fr); } .quick-actions { grid-template-columns: repeat(2, 1fr); } .ach-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 900px) {
+            .sidebar { position: fixed; inset: 0 auto 0 0; transform: translateX(-120%); transition: transform .3s ease; z-index: 9999; width: 285px !important; }
+            .sidebar.vis { transform: translateX(0); box-shadow: 10px 0 40px rgba(0,0,0,.3); }
+            .sidebar.collapsed .nav-group-label, .sidebar.collapsed .side-nav button span.label, .sidebar.collapsed .sidebar-footer .who, .sidebar.collapsed .sidebar-logo a img { display: initial; }
+            .sidebar-logo { width: 100%; }
+            .rail-toggle { display: none; }
+            .sidebar-logo .adminclose { display: block; }
+            .topbar > .topbar-row2 > h2, .search-box { display: none; }
+            .topbar { padding: 12px 16px; }
+            .topbarimgcontainer { display: flex; }
+            .content-scroll { padding: 18px 16px 34px; }
+            .hello { padding: 26px 22px; } .hello h1 { font-size: 28px; }
+        }
+        @media (max-width: 560px) {
+            .stat-row, .wh-grid, .quick-actions { grid-template-columns: 1fr; }
+            .topbar-date { display: none; }
+            .topbar-right { gap: 8px; }
+            .icon-btn { width: 38px; height: 38px; }
+            .panel { padding: 20px 16px; }
+            .coach-card .d-btn { margin-left: 0; }
+        }
+        @media (prefers-reduced-motion: reduce) { .view.active, .bar { animation: none; } }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="sidebar-logo">
+                <a href="index.html"><img src="./src/logo.webp" alt="Vitalyn Logo"></a>
+                <span class="material-symbols-outlined adminclose">close</span>
+            </div>
+            <button class="rail-toggle" id="railToggle" aria-label="Collapse sidebar"><span class="material-symbols-outlined">chevron_left</span></button>
+        </div>
+
+        <div class="sidebar-scroll">
+            <span class="nav-group-label">My wellness</span>
+            <nav class="side-nav">
+                <button class="active" onclick="showView('overview', this)"><span class="material-symbols-outlined">dashboard</span><span class="label">Overview</span></button>
+                <button onclick="showView('classes', this)"><span class="material-symbols-outlined">event_available</span><span class="label">Book Classes</span></button>
+                <button onclick="showView('progress', this)"><span class="material-symbols-outlined">monitoring</span><span class="label">My Progress</span></button>
+                <button onclick="showView('nutrition', this)"><span class="material-symbols-outlined">nutrition</span><span class="label">Nutrition</span></button>
+                <button onclick="showView('membership', this)"><span class="material-symbols-outlined">card_membership</span><span class="label">Membership</span></button>
+                <button class="logoutbtn"><span class="material-symbols-outlined">logout</span><span class="label">Logout</span></button>
+            </nav>
+        </div>
+
+        <div class="sidebar-footer">
+            <img src="./src/img14.webp"  alt="Member">
+            <div class="who">
+                <h4 id="username">Priya Sharma</h4>
+                <span>Plus Member</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ================= MAIN ================= -->
+    <main class="main">
+
+        <div class="topbar">
+            <div class="topbar-row1">
+                <div class="breadcrumb">
+                    <span>My Vitalyn</span><span class="material-symbols-outlined" style="font-size:16px;">chevron_right</span>
+                    <span class="current" id="crumbTitle">Overview</span>
+                </div>
+                <span class="topbar-date" id="topbarDate"></span>
+            </div>
+
+            <div class="topbar-row2">
+                <div class="topbarimgcontainer">
+                    <span class="material-symbols-outlined topbarmenu" role="button" aria-label="Open menu" tabindex="0">menu</span>
+                </div>
+                <h2 id="topbarTitle">Overview</h2>
+                <div class="topbar-right">
+                    <div class="search-box">
+                        <span class="material-symbols-outlined errorpage">search</span>
+                        <input type="text" placeholder="Search classes, coaches..." aria-label="Search">
+                    </div>
+                    <div class="icon-btn errorpage" role="button" aria-label="Notifications"><span class="material-symbols-outlined">notifications</span><span class="dot"></span></div>
+                    <div class="icon-btn errorpage" role="button" aria-label="Messages"><span class="material-symbols-outlined">mail</span></div>
+                    <div class="topbar-avatar"><img src="./src/img14.webp"  alt="Member"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-scroll">
+
+            <!-- ========== 1. OVERVIEW ========== -->
+            <div class="view active" id="overview">
+
+                <div class="hello">
+                    <div>
+                        <h1 id="greet">Good morning, Priya</h1>
+                        <p>Your next class is Strength Circuit at 6:30 AM tomorrow.</p>
+                    </div>
+                    <div class="hello-stats">
+                        <div><b>12</b><span>Day streak</span></div>
+                        <div><b>3 / 4</b><span>Weekly sessions</span></div>
+                        <div><b>245</b><span>Active minutes</span></div>
+                    </div>
+                </div>
+
+                <div class="stat-row">
+                    <div class="stat-card"><span class="material-symbols-outlined">fitness_center</span>
+                        <div class="stat-info"><h2>14</h2><p>Classes This Month</p><span class="delta">+3 from last month</span></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">local_fire_department</span>
+                        <div class="stat-info"><h2>12</h2><p>Day Streak</p><span class="delta">Personal best</span></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">scale</span>
+                        <div class="stat-info"><h2>3.2 kg</h2><p>Weight Change</p><span class="delta">Since you joined</span></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">water_drop</span>
+                        <div class="stat-info"><h2>5 / 8</h2><p>Glasses Today</p><span class="delta down">3 to go</span></div></div>
+                </div>
+
+                <div class="panel">
+                    <h3>Quick Actions</h3>
+                    <div class="quick-actions">
+                        <button onclick="showView('classes', document.querySelectorAll('.side-nav button')[1])"><span class="material-symbols-outlined">event_note</span><span class="t">Book a Class</span></button>
+                        <button class="errorpage"><span class="material-symbols-outlined">add_task</span><span class="t">Log Workout</span></button>
+                        <button class="errorpage"><span class="material-symbols-outlined">restaurant</span><span class="t">Log a Meal</span></button>
+                        <button class="errorpage"><span class="material-symbols-outlined">chat</span><span class="t">Message Coach</span></button>
+                    </div>
+                </div>
+
+                <div class="bento">
+                    <div class="panel span-8">
+                        <div class="panel-head"><h3>Active Minutes This Week</h3><span class="topbar-date">Goal: 300 min</span></div>
+                        <div class="bar-chart">
+                            <div class="bar-col"><div class="bar" style="height:70%;"></div><span>Mon</span></div>
+                            <div class="bar-col"><div class="bar" style="height:0%;animation-delay:.08s"></div><span>Tue</span></div>
+                            <div class="bar-col"><div class="bar" style="height:85%;animation-delay:.16s"></div><span>Wed</span></div>
+                            <div class="bar-col"><div class="bar" style="height:45%;animation-delay:.24s"></div><span>Thu</span></div>
+                            <div class="bar-col"><div class="bar hl" style="height:100%;animation-delay:.32s"></div><span>Fri</span></div>
+                            <div class="bar-col"><div class="bar" style="height:0%;animation-delay:.4s"></div><span>Sat</span></div>
+                            <div class="bar-col"><div class="bar" style="height:0%;animation-delay:.48s"></div><span>Sun</span></div>
+                        </div>
+                    </div>
+
+                    <div class="panel span-4">
+                        <h3>Weekly Goal</h3>
+                        <div class="donut-wrap">
+                            <div class="donut" role="img" aria-label="3 of 4 sessions completed"><b>3/4</b></div>
+                            <div class="donut-legend">
+                                <div class="leg-item"><span class="dot" style="background:var(--pcolor)"></span>Done (3)</div>
+                                <div class="leg-item"><span class="dot" style="background:#d9e3d6"></span>Left (1)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="panel span-8">
+                        <div class="panel-head"><h3>My Upcoming Classes</h3><button class="d-btn" onclick="showView('classes', document.querySelectorAll('.side-nav button')[1])">Book More</button></div>
+                        <table>
+                            <thead><tr><th>Class</th><th>Coach</th><th>When</th><th>Studio</th><th>Status</th></tr></thead>
+                            <tbody>
+                                <tr><td class="cell-item">Strength Circuit</td><td>Aravind Iyer</td><td>Tomorrow, 6:30 AM</td><td>Main Floor</td><td><span class="badge active">Confirmed</span></td></tr>
+                                <tr><td class="cell-item">Yoga &amp; Flow</td><td>Ravi Shankar</td><td>Wed, 9:00 AM</td><td>Studio B</td><td><span class="badge active">Confirmed</span></td></tr>
+                                <tr><td class="cell-item">HIIT Cardio</td><td>Sana Fatima</td><td>Fri, 6:00 PM</td><td>Studio A</td><td><span class="badge pending">Waitlist</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="panel span-4">
+                        <h3>Today's Nutrition</h3>
+                        <div class="budget-row">
+                            <div class="budget-item"><h5>Protein <span>62 / 90 g</span></h5><div class="budget-track"><div class="budget-fill" style="width:69%"></div></div></div>
+                            <div class="budget-item"><h5>Carbs <span>140 / 220 g</span></h5><div class="budget-track"><div class="budget-fill" style="width:64%"></div></div></div>
+                            <div class="budget-item"><h5>Water <span>5 / 8 glasses</span></h5><div class="budget-track"><div class="budget-fill" style="width:62%"></div></div></div>
+                        </div>
+                    </div>
+
+                    <div class="panel span-6">
+                        <h3>Coach Notes</h3>
+                        <div class="timeline">
+                            <div class="t-item"><div class="t-dot"><span class="material-symbols-outlined">emoji_events</span></div><div class="t-body"><h5>Great form on deadlifts</h5><p>Aravind Iyer, 2 days ago</p></div></div>
+                            <div class="t-item"><div class="t-dot"><span class="material-symbols-outlined">self_improvement</span></div><div class="t-body"><h5>Add 5 minutes of stretching after HIIT</h5><p>Sana Fatima, 4 days ago</p></div></div>
+                            <div class="t-item"><div class="t-dot"><span class="material-symbols-outlined">nutrition</span></div><div class="t-body"><h5>Meal plan updated for this week</h5><p>Meera Nair, 6 days ago</p></div></div>
+                        </div>
+                    </div>
+
+                    <div class="panel span-6">
+                        <h3>My Coach</h3>
+                        <div class="coach-card">
+                            <img src="./src/img15.webp"  alt="Aravind Iyer">
+                            <div><h4>Aravind Iyer</h4><p>Head Strength Coach</p></div>
+                            <button class="d-btn sm errorpage">Message</button>
+                        </div>
+                        <div class="coach-card" style="margin-top:12px;">
+                            <img src="./src/img16.webp"  alt="Meera Nair">
+                            <div><h4>Meera Nair</h4><p>Clinical Dietitian</p></div>
+                            <button class="d-btn sm errorpage">Message</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== 2. BOOK CLASSES ========== -->
+            <div class="view" id="classes">
+                <div class="stat-row">
+                    <div class="stat-card"><span class="material-symbols-outlined">event_available</span><div class="stat-info"><h2 id="bookedCount">2</h2><p>Booked This Week</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">history</span><div class="stat-info"><h2>14</h2><p>Attended This Month</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">all_inclusive</span><div class="stat-info"><h2>Unlimited</h2><p>Plan Allowance</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">hourglass_top</span><div class="stat-info"><h2>1</h2><p>On Waitlist</p></div></div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-head"><h3>Class Schedule</h3></div>
+                    <div class="filter-chips" id="classFilters" style="margin-bottom:18px;">
+                        <button class="active" data-f="all">All</button>
+                        <button data-f="strength">Strength</button>
+                        <button data-f="yoga">Yoga</button>
+                        <button data-f="hiit">HIIT</button>
+                        <button data-f="pilates">Pilates</button>
+                    </div>
+                    <table>
+                        <thead><tr><th>Class</th><th>Coach</th><th>When</th><th>Spots</th><th></th></tr></thead>
+                        <tbody id="classBody">
+                            <tr data-t="strength"><td class="cell-item">Strength Circuit</td><td>Aravind Iyer</td><td>Tomorrow, 6:30 AM</td><td>4 left</td><td><button class="d-btn sm booked" data-name="Strength Circuit">Booked</button></td></tr>
+                            <tr data-t="yoga"><td class="cell-item">Yoga &amp; Flow</td><td>Ravi Shankar</td><td>Wed, 9:00 AM</td><td>7 left</td><td><button class="d-btn sm booked" data-name="Yoga &amp; Flow">Booked</button></td></tr>
+                            <tr data-t="pilates"><td class="cell-item">Pilates &amp; Core</td><td>Kavya Reddy</td><td>Thu, 7:00 AM</td><td>9 left</td><td><button class="d-btn sm" data-name="Pilates &amp; Core">Book</button></td></tr>
+                            <tr data-t="hiit"><td class="cell-item">HIIT Cardio</td><td>Sana Fatima</td><td>Fri, 6:00 PM</td><td>Full</td><td><button class="d-btn sm ghost" data-name="HIIT Cardio" data-wait="1">Join Waitlist</button></td></tr>
+                            <tr data-t="yoga"><td class="cell-item">Restorative Yoga</td><td>Ravi Shankar</td><td>Sat, 8:00 AM</td><td>12 left</td><td><button class="d-btn sm" data-name="Restorative Yoga">Book</button></td></tr>
+                            <tr data-t="strength"><td class="cell-item">Lower Body Strength</td><td>Aravind Iyer</td><td>Sat, 10:00 AM</td><td>3 left</td><td><button class="d-btn sm" data-name="Lower Body Strength">Book</button></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="panel">
+                    <h3>Popular With Members</h3>
+                    <div class="wh-grid">
+                        <div class="wh-card"><img loading="lazy" src="./src/image_11.webp" alt="HIIT class"><div class="overlay"><h4>HIIT Cardio</h4><span>45 min, high energy</span></div></div>
+                        <div class="wh-card"><img loading="lazy" src="./src/image_7.webp" alt="Strength class"><div class="overlay"><h4>Strength Circuit</h4><span>60 min, all levels</span></div></div>
+                        <div class="wh-card"><img loading="lazy" src="./src/image_8.webp" alt="Yoga class"><div class="overlay"><h4>Yoga &amp; Flow</h4><span>60 min, mobility and calm</span></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== 3. PROGRESS ========== -->
+            <div class="view" id="progress">
+                <div class="stat-row">
+                    <div class="stat-card"><span class="material-symbols-outlined">scale</span><div class="stat-info"><h2>68.4 kg</h2><p>Current Weight</p><span class="delta">-3.2 kg</span></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">percent</span><div class="stat-info"><h2>24%</h2><p>Body Fat</p><span class="delta">-2.1%</span></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">favorite</span><div class="stat-info"><h2>64 bpm</h2><p>Resting Heart Rate</p><span class="delta">-5 bpm</span></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">bedtime</span><div class="stat-info"><h2>7.1 h</h2><p>Average Sleep</p></div></div>
+                </div>
+
+                <div class="bento">
+                    <div class="panel span-8">
+                        <div class="panel-head"><h3>Monthly Assessments</h3><button class="d-btn errorpage">Book Assessment</button></div>
+                        <table>
+                            <thead><tr><th>Date</th><th>Weight</th><th>Body Fat</th><th>Waist</th><th>Coach</th></tr></thead>
+                            <tbody>
+                                <tr><td class="cell-item">Oct 20</td><td>68.4 kg</td><td>24.0%</td><td>78 cm</td><td>Aravind Iyer</td></tr>
+                                <tr><td class="cell-item">Sep 20</td><td>69.5 kg</td><td>25.1%</td><td>80 cm</td><td>Aravind Iyer</td></tr>
+                                <tr><td class="cell-item">Aug 20</td><td>70.3 kg</td><td>25.8%</td><td>81 cm</td><td>Sana Fatima</td></tr>
+                                <tr><td class="cell-item">Jul 20</td><td>71.6 kg</td><td>26.1%</td><td>83 cm</td><td>Sana Fatima</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="panel span-4">
+                        <h3>My Goals</h3>
+                        <div class="budget-row">
+                            <div class="budget-item"><h5>Reach 65 kg <span>68%</span></h5><div class="budget-track"><div class="budget-fill" style="width:68%"></div></div></div>
+                            <div class="budget-item"><h5>4 sessions a week <span>75%</span></h5><div class="budget-track"><div class="budget-fill" style="width:75%"></div></div></div>
+                            <div class="budget-item"><h5>Deadlift 80 kg <span>90%</span></h5><div class="budget-track"><div class="budget-fill" style="width:90%"></div></div></div>
+                            <div class="budget-item"><h5>Sleep 7.5 hours <span>85%</span></h5><div class="budget-track"><div class="budget-fill" style="width:85%"></div></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3>Achievements</h3>
+                    <div class="ach-grid">
+                        <div class="ach"><span class="material-symbols-outlined">local_fire_department</span><h5>10 Day Streak</h5><p>Unlocked</p></div>
+                        <div class="ach"><span class="material-symbols-outlined">emoji_events</span><h5>First Month Done</h5><p>Unlocked</p></div>
+                        <div class="ach"><span class="material-symbols-outlined">self_improvement</span><h5>5 Yoga Classes</h5><p>Unlocked</p></div>
+                        <div class="ach locked"><span class="material-symbols-outlined">workspace_premium</span><h5>30 Day Streak</h5><p>18 days to go</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== 4. NUTRITION ========== -->
+            <div class="view" id="nutrition">
+                <div class="stat-row">
+                    <div class="stat-card"><span class="material-symbols-outlined">local_fire_department</span><div class="stat-info"><h2>1,850</h2><p>Daily Calorie Target</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">egg_alt</span><div class="stat-info"><h2>90 g</h2><p>Protein Target</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">water_drop</span><div class="stat-info"><h2>8</h2><p>Glasses Of Water</p></div></div>
+                    <div class="stat-card"><span class="material-symbols-outlined">task_alt</span><div class="stat-info"><h2>6 / 7</h2><p>Days On Plan</p></div></div>
+                </div>
+
+                <div class="bento">
+                    <div class="panel span-8">
+                        <div class="panel-head"><h3>Today's Meal Plan</h3><button class="d-btn errorpage">Log a Meal</button></div>
+                        <table>
+                            <thead><tr><th>Meal</th><th>What to eat</th><th>Calories</th><th>Status</th></tr></thead>
+                            <tbody>
+                                <tr><td class="cell-item">Breakfast</td><td>Vegetable upma with curd</td><td>380 kcal</td><td><span class="badge active">Eaten</span></td></tr>
+                                <tr><td class="cell-item">Mid-morning</td><td>Fruit bowl and almonds</td><td>180 kcal</td><td><span class="badge active">Eaten</span></td></tr>
+                                <tr><td class="cell-item">Lunch</td><td>Brown rice, dal, sautéed greens</td><td>520 kcal</td><td><span class="badge pending">Upcoming</span></td></tr>
+                                <tr><td class="cell-item">Snack</td><td>Sprouts chaat</td><td>200 kcal</td><td><span class="badge pending">Upcoming</span></td></tr>
+                                <tr><td class="cell-item">Dinner</td><td>Grilled paneer, roti, salad</td><td>480 kcal</td><td><span class="badge pending">Upcoming</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="panel span-4">
+                        <h3>Water Tracker</h3>
+                        <div class="donut-wrap" style="justify-content:center;flex-direction:column;">
+                            <div class="donut" id="waterDonut" style="background:conic-gradient(var(--pcolor) 0 62.5%, #d9e3d6 62.5% 100%)"><b id="waterNum">5/8</b></div>
+                            <div style="display:flex;gap:10px;">
+                                <button class="d-btn sm ghost" id="waterMinus" aria-label="Remove a glass">−</button>
+                                <button class="d-btn sm" id="waterPlus">+ Add glass</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3>My Dietitian</h3>
+                    <div class="coach-card">
+                        <img src="./src/img16.webp"  alt="Meera Nair">
+                        <div><h4>Meera Nair</h4><p>Clinical Dietitian. Next consult: Nov 3, 11:00 AM</p></div>
+                        <button class="d-btn sm errorpage">Reschedule</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== 5. MEMBERSHIP ========== -->
+            <div class="view" id="membership">
+                <div class="plan-hero">
+                    <div>
+                        <h3>Active Plan</h3>
+                        <p>Renews on Dec 20, 2026. Billed quarterly.</p>
+                    </div>
+                    <div class="price">₹2,999<small>/month</small></div>
+                    <button class="d-btn errorpage" style="background:var(--pcolor);border-color:var(--pcolor)">Upgrade Plan</button>
+                </div>
+
+                <div class="bento">
+                    <div class="panel span-6">
+                        <h3>What's Included</h3>
+                        <ul class="perk-list">
+                            <li><span class="material-symbols-outlined">check_circle</span>Unlimited group classes</li>
+                            <li><span class="material-symbols-outlined">check_circle</span>Monthly body assessment</li>
+                            <li><span class="material-symbols-outlined">check_circle</span>Recovery lounge access</li>
+                            <li><span class="material-symbols-outlined">check_circle</span>1 nutrition consult a month</li>
+                        </ul>
+                        <div style="display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;">
+                            <button class="d-btn errorpage">Pause Membership</button>
+                            <button class="d-btn ghost errorpage">Cancel Plan</button>
+                        </div>
+                    </div>
+
+                    <div class="panel span-6">
+                        <h3>Payment History</h3>
+                        <table>
+                            <thead><tr><th>Date</th><th>Description</th><th>Amount</th><th>Status</th></tr></thead>
+                            <tbody>
+                                <tr><td>Sep 20</td><td>Plus, Quarterly</td><td>₹8,997</td><td><span class="badge active">Paid</span></td></tr>
+                                <tr><td>Jun 20</td><td>Plus, Quarterly</td><td>₹8,997</td><td><span class="badge active">Paid</span></td></tr>
+                                <tr><td>Mar 20</td><td>Joining fee</td><td>₹1,000</td><td><span class="badge active">Paid</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3>Need Help?</h3>
+                    <div class="student-list">
+                        <div class="student-row"><img src="./src/img17.webp"  alt="Front desk"><div class="s-info"><h5>Front Desk</h5><p>Open 5 AM to 10 PM, +91 12345 67890</p></div><button class="d-btn sm errorpage">Contact</button></div>
+                        <div class="student-row"><img src="./src/img18.webp"  alt="Member care"><div class="s-info"><h5>Member Care</h5><p>Billing, freezes and plan changes</p></div><button class="d-btn sm errorpage">Contact</button></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script>
+        const topbarmenu = document.querySelector(".topbarmenu");
+        const adminclose = document.querySelector(".adminclose");
+        const sidebar = document.querySelector(".sidebar");
+        const railToggle = document.querySelector("#railToggle");
+
+        // ----- Image fallback -----
+        document.addEventListener("error", (e) => {
+            const t = e.target;
+            if (t && t.tagName === "IMG" && !t.dataset.fb) {
+                t.dataset.fb = "1";
+                t.src = "https://picsum.photos/seed/" + encodeURIComponent((t.alt || "vitalyn").replace(/\s+/g, "-")) + "/800/600";
+            }
+        }, true);
+
+        // ----- Sidebar -----
+        topbarmenu.addEventListener("click", () => sidebar.classList.toggle("vis"));
+        topbarmenu.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); sidebar.classList.toggle("vis"); } });
+        adminclose.addEventListener("click", () => sidebar.classList.remove("vis"));
+        railToggle.addEventListener("click", () => {
+            sidebar.classList.toggle("collapsed");
+            railToggle.querySelector(".material-symbols-outlined").textContent = sidebar.classList.contains("collapsed") ? "chevron_right" : "chevron_left";
+        });
+
+        // ----- Logout -----
+        document.querySelector(".logoutbtn").addEventListener("click", () => { window.location.href = "index.html"; });
+
+        // ----- Username from login -----
+        const username = document.querySelector("#username");
+        let email = null;
+        try { email = localStorage.getItem("useremail"); } catch (e) { /* storage unavailable */ }
+        if (email) username.textContent = email.split("@")[0];
+
+        // ----- Greeting -----
+        const hr = new Date().getHours();
+        const part = hr < 12 ? "Good morning" : hr < 17 ? "Good afternoon" : "Good evening";
+        document.getElementById("greet").textContent = part + ", " + username.textContent.split(" ")[0];
+
+        // ----- Buttons that go to the coming-soon page -----
+        document.querySelectorAll(".errorpage").forEach((el) => el.addEventListener("click", () => { window.location.href = "404.html"; }));
+
+        // ----- Toast -----
+        const toast = document.getElementById("toast");
+        let toastTimer;
+        function say(msg) {
+            toast.textContent = msg;
+            toast.classList.add("show");
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+        }
+
+        // ----- View switching -----
+        const titles = { overview: "Overview", classes: "Book Classes", progress: "My Progress", nutrition: "Nutrition", membership: "Membership" };
+        function showView(id, btn) {
+            document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
+            document.getElementById(id).classList.add("active");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            document.querySelectorAll(".side-nav button").forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            document.getElementById("topbarTitle").innerText = titles[id];
+            document.getElementById("crumbTitle").innerText = titles[id];
+            sidebar.classList.remove("vis");
+        }
+
+        // ----- Class filter -----
+        const classBtns = document.querySelectorAll("#classFilters button");
+        classBtns.forEach((b) => b.addEventListener("click", () => {
+            classBtns.forEach((x) => x.classList.remove("active"));
+            b.classList.add("active");
+            document.querySelectorAll("#classBody tr").forEach((r) => r.classList.toggle("hide", b.dataset.f !== "all" && r.dataset.t !== b.dataset.f));
+        }));
+
+        // ----- Book / cancel / waitlist -----
+        const bookedCount = document.getElementById("bookedCount");
+        function recount() { bookedCount.textContent = document.querySelectorAll("#classBody .d-btn.booked").length; }
+        document.querySelectorAll("#classBody .d-btn").forEach((btn) => btn.addEventListener("click", () => {
+            const name = btn.dataset.name;
+            if (btn.classList.contains("booked")) {
+                btn.classList.remove("booked");
+                btn.textContent = btn.dataset.wait ? "Join Waitlist" : "Book";
+                if (btn.dataset.wait) btn.classList.add("ghost");
+                say(name + " cancelled");
+            } else {
+                btn.classList.remove("ghost");
+                btn.classList.add("booked");
+                btn.textContent = btn.dataset.wait ? "On Waitlist" : "Booked";
+                say(btn.dataset.wait ? "You are on the waitlist for " + name : name + " booked");
+            }
+            recount();
+        }));
+        recount();
+
+        // ----- Water tracker -----
+        let glasses = 5;
+        const waterNum = document.getElementById("waterNum");
+        const waterDonut = document.getElementById("waterDonut");
+        function drawWater() {
+            const pct = Math.min(glasses / 8, 1) * 100;
+            waterNum.textContent = glasses + "/8";
+            waterDonut.style.background = "conic-gradient(var(--pcolor) 0 " + pct + "%, #d9e3d6 " + pct + "% 100%)";
+        }
+        document.getElementById("waterPlus").addEventListener("click", () => {
+            if (glasses < 12) glasses++;
+            drawWater();
+            if (glasses === 8) say("Daily water goal reached");
+        });
+        document.getElementById("waterMinus").addEventListener("click", () => { if (glasses > 0) glasses--; drawWater(); });
+
+        // ----- Live date -----
+        document.getElementById("topbarDate").textContent = new Date().toLocaleDateString("en-US", { weekday: "long", month: "short", day: "numeric", year: "numeric" });
+    </script>
+
+</body>
+
+</html>

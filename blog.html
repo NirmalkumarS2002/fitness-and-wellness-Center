@@ -1,0 +1,1583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,-50..200" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..800&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&display=swap"
+        rel="stylesheet">
+    <title>Blogs | Vitalyn Fitness &amp; Wellness Studio</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: clip;
+            max-width: 100%;
+        }
+
+        body {
+            overflow-x: clip;
+            max-width: 100%;
+            font-family: "DM Sans", sans-serif;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        :root {
+            --pcolor: #e8552d;
+            --dark: #10302b;
+            --sage: #e6eee3;
+            --sand: #f7f4ee;
+            --head: "Bricolage Grotesque", sans-serif;
+        }
+
+        .logoimage {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .logoimage img {
+            height: 46px;
+            width: auto;
+            max-width: 100%;
+            display: block;
+        }
+
+        /* shared */
+        .sec-pad {
+            padding: 100px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .sec-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--sage);
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 14px;
+            padding: 7px 16px;
+            border-radius: 40px;
+            margin-bottom: 18px;
+        }
+
+        .sec-eyebrow::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--pcolor);
+        }
+
+        .sec-title {
+            font-family: var(--head);
+            font-size: 50px;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+            overflow-wrap: break-word;
+        }
+
+        .sec-title span {
+            color: var(--pcolor);
+            font-style: italic;
+        }
+
+        .sec-desc {
+            font-size: 17px;
+            line-height: 1.7;
+            color: #55635f;
+            max-width: 560px;
+        }
+
+        .section-btn {
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: var(--dark);
+            border: none;
+            color: #fff;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 28px;
+            cursor: pointer;
+        }
+
+        .section-btn span {
+            transition: .4s ease;
+            font-size: 22px;
+        }
+
+        .section-btn::before {
+            content: "";
+            height: 100%;
+            width: 0;
+            background: var(--pcolor);
+            transition: width .4s ease;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .section-btn:hover::before {
+            width: 100%;
+        }
+
+        .section-btn:hover span {
+            transform: translateX(5px);
+        }
+
+        .head-center {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 60px;
+        }
+
+        .head-center .sec-desc {
+            margin-inline: auto;
+        }
+
+        @media (max-width: 700px) {
+            .sec-pad {
+                padding: 70px 20px;
+            }
+
+            .sec-title {
+                font-size: clamp(30px, 8.5vw, 42px);
+                letter-spacing: -1px;
+            }
+
+            .head-center {
+                margin-bottom: 40px;
+            }
+        }
+
+        /* page banner (replaces hero on this page) */
+        .page-banner {
+            background: var(--dark);
+            color: #fff;
+            padding: 150px 20px 70px;
+            text-align: center;
+        }
+
+        .page-banner h1 {
+            font-family: var(--head);
+            font-size: clamp(36px, 6vw, 72px);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .page-banner h1 em {
+            color: var(--pcolor);
+        }
+
+        .page-banner p {
+            max-width: 520px;
+            margin: 18px auto 0;
+            color: #cfe0d9;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        /* header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            max-width: 100vw;
+            z-index: 100;
+            transition: background .4s ease, box-shadow .4s ease;
+        }
+
+        .header.scrolled {
+            background: var(--dark);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, .18);
+        }
+
+        .navbar {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 18px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            transition: padding .4s ease;
+        }
+
+        .header.scrolled .navbar {
+            padding-block: 12px;
+        }
+
+        .menus {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #ffffff26;
+            padding: 6px;
+            border-radius: 50px;
+        }
+
+        .header.scrolled .menus {
+            background: #ffffff12;
+        }
+
+        .menus a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 10px 22px;
+            border-radius: 40px;
+            transition: .3s ease;
+        }
+
+        .menus a:hover {
+            background: #ffffff26;
+        }
+
+        .menus a.active {
+            background: var(--pcolor);
+        }
+
+        .navicons {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-shrink: 0;
+        }
+
+        .navicons>div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navicons .material-symbols-outlined {
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .navicons>div .errorpage,
+        .navicons>div .logicon {
+            height: 42px;
+            width: 42px;
+            border-radius: 50%;
+            border: 1px solid #ffffff55;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            transition: .3s ease;
+        }
+
+        .navicons>div .errorpage:hover,
+        .navicons>div .logicon:hover {
+            background: var(--pcolor);
+            border-color: var(--pcolor);
+        }
+
+        .menubtn {
+            font-size: 32px;
+        }
+
+        .loginbtn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            padding: 11px 24px;
+            border-radius: 50px;
+            transition: .3s ease;
+        }
+
+        .loginbtn span {
+            color: var(--dark) !important;
+            font-size: 20px;
+        }
+
+        .loginbtn:hover {
+            background: var(--pcolor);
+            color: #fff;
+        }
+
+        .loginbtn:hover span {
+            color: #fff !important;
+        }
+
+        @media (min-width:951px) {
+            .menubtn {
+                display: none;
+            }
+        }
+
+        @media (max-width:950px) {
+
+            .menus,
+            .loginbtn,
+            .navicons>div .errorpage {
+                display: none;
+            }
+
+            .navbar {
+                padding: 12px 16px;
+                gap: 10px;
+            }
+
+            .logoimage img {
+                height: 36px;
+            }
+
+            .navicons>div .errorpage {
+                height: 40px;
+                width: 40px;
+            }
+        }
+
+        /* sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            height: 100dvh;
+            width: 380px;
+            max-width: 88vw;
+            background: var(--sand);
+            z-index: 300;
+            padding: 30px 28px;
+            overflow-y: auto;
+            transform: translateX(105%);
+            visibility: hidden;
+            transition: transform .5s ease, visibility 0s linear .5s;
+            box-shadow: -10px 0 40px rgba(0, 0, 0, .2);
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
+            visibility: visible;
+            transition: transform .5s ease, visibility 0s;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            background: var(--dark);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: .3s ease;
+        }
+
+        .sidebar .closebtn:hover {
+            background: var(--pcolor);
+            transform: rotate(90deg);
+        }
+
+        .sidebar .logoimage img {
+            height: 44px;
+            filter: brightness(0) saturate(100%);
+        }
+
+        .sidemenus {
+            list-style: none;
+            margin: 28px 0 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidemenus li {
+            border-bottom: 1px solid #10302b1f;
+        }
+
+        .sidemenus a {
+            display: block;
+            padding: 13px 0;
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 17px;
+            transition: .3s ease;
+        }
+
+        .sidemenus a:hover,
+        .sidemenus li.active a {
+            color: var(--pcolor);
+            padding-left: 8px;
+        }
+
+        .sidebar>p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #55635f;
+            margin-bottom: 20px;
+        }
+
+        .sideimgwrap {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 170px;
+            margin-bottom: 24px;
+            background: var(--dark);
+        }
+
+        .sideimgwrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sidebtn {
+            position: absolute;
+            left: 50%;
+            bottom: 16px;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--pcolor);
+            color: #fff;
+            border: none;
+            padding: 12px 26px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-family: inherit;
+        }
+
+        .sidebtn:hover {
+            background: var(--dark);
+        }
+
+        .sidebar-details {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar-details>a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .sidebar-details>a span {
+            color: var(--pcolor);
+        }
+
+        .sideicons {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .sideicons p {
+            font-weight: 700;
+            color: var(--dark);
+            white-space: nowrap;
+        }
+
+        .sidebar .footer-sotial-links a {
+            background: var(--dark);
+            color: #fff;
+        }
+
+        .page-dim {
+            position: fixed;
+            inset: 0;
+            background: rgba(8, 24, 21, .6);
+            z-index: 250;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .4s ease;
+        }
+
+        .page-dim.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* footer */
+        .footer {
+            background: #0a211d;
+            color: #cfdcd6;
+        }
+
+        .footer1 {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 30px 50px;
+            display: grid;
+            grid-template-columns: 1.4fr .8fr .8fr 1.2fr;
+            gap: 50px;
+        }
+
+        .footer1>* {
+            min-width: 0;
+        }
+
+        .foot1 .logoimage {
+            margin-bottom: 20px;
+        }
+
+        .foot1 p,
+        .foot3 p {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 22px;
+            color: #b3c4bd;
+        }
+
+        .footer h2 {
+            font-family: var(--head);
+            font-size: 22px;
+            color: #fff;
+            margin-bottom: 22px;
+        }
+
+        .footer-sotial-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .footer-sotial-links a {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            background: #ffffff14;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: .3s ease;
+        }
+
+        .footer-sotial-links a:hover {
+            background: var(--pcolor);
+            transform: translateY(-4px);
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .links a {
+            color: #b3c4bd;
+            text-decoration: none;
+            font-size: 15px;
+            transition: .3s ease;
+            width: fit-content;
+        }
+
+        .links a:hover {
+            color: var(--pcolor);
+            padding-left: 6px;
+        }
+
+        .footerform {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .footerform input {
+            flex: 1 1 180px;
+            min-width: 0;
+            padding: 14px 20px;
+            border-radius: 50px;
+            border: 1px solid #ffffff2a;
+            background: #ffffff0f;
+            color: #fff;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: .3s ease;
+        }
+
+        .footerform input::placeholder {
+            color: #8ea39b;
+        }
+
+        .footerform input:focus {
+            border-color: var(--pcolor);
+        }
+
+        .footerform .herobtn {
+            display: flex;
+            align-items: center;
+            padding: 14px 26px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: inherit;
+            background: var(--pcolor);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .footerform .herobtn::before {
+            content: "";
+            height: 100%;
+            width: 0;
+            background: #fff;
+            transition: width .4s ease;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .footerform .herobtn:hover {
+            color: var(--dark);
+        }
+
+        .footerform .herobtn:hover::before {
+            width: 100%;
+        }
+
+        .foot-error {
+            flex-basis: 100%;
+            font-size: 14px;
+            margin: 4px 0 0 !important;
+            min-height: 18px;
+            color: #ff8d72 !important;
+        }
+
+        .foot-error.ok {
+            color: #7fe0a8 !important;
+        }
+
+        .footer2 {
+            border-top: 1px solid #ffffff1a;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            color: #8ea39b;
+        }
+
+        .footer2 a {
+            color: #b3c4bd;
+            text-decoration: none;
+            margin-inline: 6px;
+        }
+
+        .footer2 a:hover {
+            color: var(--pcolor);
+        }
+
+        @media (max-width:1000px) {
+            .footer1 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width:560px) {
+            .footer1 {
+                grid-template-columns: 1fr;
+                padding: 60px 20px 40px;
+            }
+
+            .footer2 {
+                flex-direction: column;
+                text-align: center;
+                padding-inline: 20px;
+            }
+        }
+
+        /* reveal */
+        .js .reveal,
+        .js .reveal-left,
+        .js .reveal-right {
+            opacity: 0;
+            transition: opacity .8s ease, transform .8s ease;
+        }
+
+        .js .reveal {
+            transform: translateY(40px);
+        }
+
+        .js .reveal-left {
+            transform: translateX(-50px);
+        }
+
+        .js .reveal-right {
+            transform: translateX(50px);
+        }
+
+        .js .reveal.show,
+        .js .reveal-left.show,
+        .js .reveal-right.show {
+            opacity: 1;
+            transform: none;
+        }
+
+        .delay-1 {
+            transition-delay: .1s !important;
+        }
+
+        .delay-2 {
+            transition-delay: .25s !important;
+        }
+
+        .delay-3 {
+            transition-delay: .4s !important;
+        }
+
+        .delay-4 {
+            transition-delay: .55s !important;
+        }
+
+        @media (max-width: 800px) {
+
+            .js .reveal-left,
+            .js .reveal-right {
+                transform: translateY(30px);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .js .reveal,
+            .js .reveal-left,
+            .js .reveal-right {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+
+        /* ===== BLOG BANNER + SEARCH ===== */
+        .blog-search {
+            position: relative;
+            max-width: 520px;
+            margin: 30px auto 0;
+        }
+
+        .blog-search input {
+            width: 100%;
+            padding: 16px 56px 16px 24px;
+            border-radius: 50px;
+            border: 1px solid #ffffff33;
+            background: #ffffff14;
+            color: #fff;
+            font: inherit;
+            font-size: 16px;
+            outline: none;
+            transition: .3s ease;
+        }
+
+        .blog-search input::placeholder {
+            color: #9fb5ad;
+        }
+
+        .blog-search input:focus {
+            border-color: var(--pcolor);
+            background: #ffffff1f;
+        }
+
+        .blog-search .material-symbols-outlined {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--pcolor);
+            pointer-events: none;
+        }
+
+        /* ===== FEATURED ===== */
+        .feat {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .feat>* {
+            min-width: 0;
+        }
+
+        .feat-img {
+            position: relative;
+            border-radius: 28px;
+            overflow: hidden;
+            aspect-ratio: 4 / 3;
+            background: var(--sage);
+        }
+
+        .feat-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: .6s ease;
+        }
+
+        .feat:hover .feat-img img {
+            transform: scale(1.05);
+        }
+
+        .meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 16px;
+            font-size: 14px;
+            color: #66736f;
+            margin-bottom: 14px;
+        }
+
+        .cat-tag {
+            background: var(--pcolor);
+            color: #fff;
+            font-weight: 700;
+            font-size: 13px;
+            padding: 5px 14px;
+            border-radius: 20px;
+        }
+
+        .meta .material-symbols-outlined {
+            font-size: 18px;
+            vertical-align: -4px;
+            margin-right: 4px;
+        }
+
+        .feat h2 {
+            font-family: var(--head);
+            font-size: clamp(28px, 4vw, 42px);
+            line-height: 1.15;
+            letter-spacing: -1px;
+            color: var(--dark);
+            margin-bottom: 16px;
+        }
+
+        .feat p.ex {
+            font-size: 17px;
+            line-height: 1.7;
+            color: #55635f;
+        }
+
+        .author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .author img {
+            height: 48px;
+            width: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--sage);
+        }
+
+        .author b {
+            display: block;
+            color: var(--dark);
+            font-size: 15px;
+        }
+
+        .author span {
+            font-size: 13px;
+            color: #66736f;
+        }
+
+        @media (max-width: 900px) {
+            .feat {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        /* ===== FILTER + GRID ===== */
+        .blog-section {
+            background: var(--sand);
+        }
+
+        .chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 44px;
+        }
+
+        .chips button {
+            font-family: inherit;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 10px 22px;
+            border-radius: 40px;
+            border: 2px solid var(--dark);
+            background: transparent;
+            color: var(--dark);
+            cursor: pointer;
+            transition: .3s ease;
+        }
+
+        .chips button:hover {
+            background: var(--sage);
+        }
+
+        .chips button.on {
+            background: var(--dark);
+            color: #fff;
+        }
+
+        .chips button:focus-visible,
+        .post a:focus-visible {
+            outline: 3px solid var(--pcolor);
+            outline-offset: 3px;
+        }
+
+        .post-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        .post {
+            background: #fff;
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform .3s ease, box-shadow .3s ease;
+        }
+
+        .post:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 36px rgba(16, 48, 43, .12);
+        }
+
+        .post[hidden] {
+            display: none;
+        }
+
+        .post-img {
+            aspect-ratio: 16 / 10;
+            overflow: hidden;
+            background: var(--sage);
+            position: relative;
+        }
+
+        .post-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: .5s ease;
+        }
+
+        .post:hover .post-img img {
+            transform: scale(1.07);
+        }
+
+        .post-img .cat-tag {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: #fff;
+            color: var(--dark);
+        }
+
+        .post-body {
+            padding: 24px 26px 28px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .post-body .meta {
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .post-body h3 {
+            font-family: var(--head);
+            font-size: 22px;
+            line-height: 1.25;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .post-body p {
+            font-size: 15px;
+            line-height: 1.65;
+            color: #66736f;
+            flex: 1;
+        }
+
+        .post-body a {
+            margin-top: 18px;
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--pcolor);
+            text-decoration: none;
+        }
+
+        .post-body a span {
+            transition: transform .3s ease;
+        }
+
+        .post-body a:hover span {
+            transform: translateX(5px);
+        }
+
+        .no-posts {
+            text-align: center;
+            font-size: 17px;
+            color: #55635f;
+            padding: 30px 0;
+        }
+
+        .no-posts button {
+            font: inherit;
+            font-weight: 700;
+            color: var(--pcolor);
+            background: none;
+            border: none;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        @media (max-width: 950px) {
+            .post-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .post-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== QUICK TIPS ===== */
+        .tips-section {
+            background: var(--dark);
+        }
+
+        .tips-section .sec-title {
+            color: #fff;
+        }
+
+        .tips-section .sec-desc {
+            color: #bdd0c9;
+        }
+
+        .tips-section .sec-eyebrow {
+            background: #ffffff1a;
+            color: #fff;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+
+        .tip {
+            background: #ffffff0d;
+            border-radius: 24px;
+            padding: 30px 26px;
+            color: #fff;
+        }
+
+        .tip .material-symbols-outlined {
+            color: var(--pcolor);
+            font-size: 38px;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .tip h3 {
+            font-family: var(--head);
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .tip p {
+            font-size: 15px;
+            line-height: 1.65;
+            color: #cfdcd6;
+        }
+
+        @media (max-width: 950px) {
+            .tips-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            padding: 70px 20px;
+            background: var(--pcolor);
+        }
+
+        .cta-box {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .cta-box h2 {
+            font-family: var(--head);
+            font-size: 44px;
+            font-weight: 700;
+            color: #fff;
+            max-width: 650px;
+            line-height: 1.15;
+            letter-spacing: -1px;
+        }
+
+        .cta-box .section-btn {
+            background: #fff;
+            color: var(--dark);
+            margin-top: 0;
+            flex-shrink: 0;
+        }
+
+        .cta-box .section-btn::before {
+            background: var(--dark);
+        }
+
+        .cta-box .section-btn:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 800px) {
+            .cta-box {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .cta-box h2 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header scrolled">
+        <div class="navbar">
+            <a href="index.html" class="logoimage"><img src="./src/logo.webp" alt="Vitalyn Logo"></a>
+            <ul class="menus">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="blog.html" class="active">Blogs</a></li>
+                <li><a href="service.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="navicons">
+                <div>
+                    <span class="material-symbols-outlined errorpage">call</span>
+                    <span class="material-symbols-outlined logicon">person</span>
+                    <span class="material-symbols-outlined menubtn">menu</span>
+                </div>
+                <a href="404.html" class="loginbtn">Join<span class="material-symbols-outlined">arrow_forward</span></a>
+            </div>
+        </div>
+    </header>
+
+    <aside class="sidebar" aria-label="Mobile menu">
+        <span class="material-symbols-outlined closebtn">close</span>
+        <a href="index.html" class="logoimage"><img src="./src/logo.webp" alt="Vitalyn Logo"></a>
+        <ul class="sidemenus">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li class="active"><a href="blog.html">Blogs</a></li>
+            <li><a href="service.html">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <p>Train smarter, eat better and recover well with a fitness and wellness studio built around your goals.</p>
+        <div class="sideimgwrap">
+            <img loading="lazy" src="./src/image_15.webp" alt="Studio training session">
+            <button class="sidebtn errorpage">Join Now<span
+                    class="material-symbols-outlined">arrow_right_alt</span></button>
+        </div>
+        <div class="sidebar-details">
+            <a href="404.html"><span class="material-symbols-outlined">call</span>+91 12345 67890</a>
+            <a href="404.html"><span class="material-symbols-outlined">location_on</span> Anna Nagar, Chennai, India</a>
+            <div class="sideicons">
+                <p>Follow us:</p>
+                <div class="footer-sotial-links">
+                    <a href="404.html" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="404.html" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="404.html" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="404.html" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+
+    <section class="page-banner">
+        <h1>Read, learn &amp; <em>move better</em></h1>
+        <p>Practical advice on training, food, recovery and mindful living from our coaches and dietitians.</p>
+        <div class="blog-search">
+            <input type="search" id="blog-q" placeholder="Search articles" aria-label="Search articles">
+            <span class="material-symbols-outlined">search</span>
+        </div>
+    </section>
+
+    <!-- FEATURED -->
+    <section class="sec-pad">
+        <div class="feat">
+            <div class="feat-img reveal-left"><img src="./src/image_18.webp" alt="Lifting weights in the studio"
+                    fetchpriority="high"></div>
+            <div class="reveal-right">
+                <div class="meta"><span class="cat-tag">Featured</span><span><span
+                            class="material-symbols-outlined">schedule</span>8 min read</span></div>
+                <h2>How to build a workout habit that lasts past the first month</h2>
+                <p class="ex">Motivation fades, routine stays. Learn how to pick the right schedule, start small and
+                    track progress so exercise becomes part of your week.</p>
+                <div class="author">
+                    <img loading="lazy" src="./src/img15.webp" alt="Aravind Iyer">
+                    <div><b>Aravind Iyer</b><span>Head Strength Coach</span></div>
+                </div>
+                <a href="404.html" class="section-btn">Read article<span
+                        class="material-symbols-outlined">arrow_right_alt</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- LATEST ARTICLES -->
+    <section class="blog-section">
+        <div class="sec-pad">
+            <div class="head-center reveal">
+                <p class="sec-eyebrow">Latest Articles</p>
+                <h2 class="sec-title">Fresh reads for <span>every goal</span></h2>
+                <p class="sec-desc">Filter by topic or use the search box above.</p>
+            </div>
+            <div class="chips" role="group" aria-label="Filter articles by topic">
+                <button type="button" class="on" data-cat="All">All</button>
+                <button type="button" data-cat="Workouts">Workouts</button>
+                <button type="button" data-cat="Nutrition">Nutrition</button>
+                <button type="button" data-cat="Yoga">Yoga</button>
+                <button type="button" data-cat="Recovery">Recovery</button>
+                <button type="button" data-cat="Mindfulness">Mindfulness</button>
+            </div>
+            <div class="post-grid" id="post-grid">
+                <article class="post reveal delay-1" data-cat="Nutrition">
+                    <div class="post-img"><img loading="lazy" decoding="async" src="./src/image_6.webp"
+                            alt="Build a plate that keeps you full"><span class="cat-tag">Nutrition</span></div>
+                    <div class="post-body">
+                        <div class="meta"><span><span class="material-symbols-outlined">schedule</span>5 min
+                                read</span><span>By Meera Nair</span></div>
+                        <h3>Build a plate that keeps you full</h3>
+                        <p>A simple way to balance protein, fibre and carbs without counting every calorie.</p>
+                        <a href="404.html">Read article<span
+                                class="material-symbols-outlined">arrow_right_alt</span></a>
+                    </div>
+                </article>
+                <article class="post reveal delay-2" data-cat="Workouts">
+                    <div class="post-img"><img loading="lazy" decoding="async" src="./src/image_7.webp"
+                            alt="Strength training for complete beginners"><span class="cat-tag">Workouts</span></div>
+                    <div class="post-body">
+                        <div class="meta"><span><span class="material-symbols-outlined">schedule</span>6 min
+                                read</span><span>By Aravind Iyer</span></div>
+                        <h3>Strength training for complete beginners</h3>
+                        <p>Start with four basic movements, learn the form and add weight slowly.</p>
+                        <a href="404.html">Read article<span
+                                class="material-symbols-outlined">arrow_right_alt</span></a>
+                    </div>
+                </article>
+                <article class="post reveal delay-3" data-cat="Yoga">
+                    <div class="post-img"><img loading="lazy" decoding="async" src="./src/image_8.webp"
+                            alt="A 10-minute morning stretch for stiff backs"><span class="cat-tag">Yoga</span></div>
+                    <div class="post-body">
+                        <div class="meta"><span><span class="material-symbols-outlined">schedule</span>4 min
+                                read</span><span>By Ravi Shankar</span></div>
+                        <h3>A 10-minute morning stretch for stiff backs</h3>
+                        <p>Gentle moves you can do beside your bed before the day gets busy.</p>
+                        <a href="404.html">Read article<span
+                                class="material-symbols-outlined">arrow_right_alt</span></a>
+                    </div>
+                </article>
+                <article class="post reveal delay-1" data-cat="Recovery">
+                    <div class="post-img"><img loading="lazy" decoding="async" src="./src/image_9.webp"
+                            alt="Why rest days make you stronger"><span class="cat-tag">Recovery</span></div>
+                    <div class="post-body">
+                        <div class="meta"><span><span class="material-symbols-outlined">schedule</span>5 min
+                                read</span><span>By Sana Fatima</span></div>
+                        <h3>Why rest days make you stronger</h3>
+                        <p>Muscles rebuild between sessions. Here is how to rest well and still stay active.</p>
+                        <a href="404.html">Read article<span
+                                class="material-symbols-outlined">arrow_right_alt</span></a>
+                    </div>
+                </article>
+                <article class="post reveal delay-2" data-cat="Mindfulness">
+                    <div class="post-img"><img loading="lazy" decoding="async" src="./src/image_10.webp"
+                            alt="Breathing exercises for a calmer evening"><span class="cat-tag">Mindfulness</span>
+                    </div>
+                    <div class="post-body">
+                        <div class="meta"><span><span class="material-symbols-outlined">schedule</span>4 min
+                                read</span><span>By Ravi Shankar</span></div>
+                        <h3>Breathing exercises for a calmer evening</h3>
+                        <p>Slow breathing can help you unwind. Try this three-step routine tonight.</p>
+                        <a href="404.html">Read article<span
+                                class="material-symbols-outlined">arrow_right_alt</span></a>
+                    </div>
+                </article>
+                <article class="post reveal delay-3" data-cat="Workouts">
+                    <div class="post-img"><img loading="lazy" decoding="async" src="./src/image_11.webp"
+                            alt="HIIT without the burnout"><span class="cat-tag">Workouts</span></div>
+                    <div class="post-body">
+                        <div class="meta"><span><span class="material-symbols-outlined">schedule</span>7 min
+                                read</span><span>By Sana Fatima</span></div>
+                        <h3>HIIT without the burnout</h3>
+                        <p>How to structure intervals, how often to do them and when to scale back.</p>
+                        <a href="404.html">Read article<span
+                                class="material-symbols-outlined">arrow_right_alt</span></a>
+                    </div>
+                </article>
+            </div>
+            <p class="no-posts" id="no-posts" hidden>No articles match your search. <button type="button"
+                    id="reset-filters">Clear filters</button></p>
+        </div>
+    </section>
+
+    <!-- QUICK TIPS -->
+    <section class="tips-section">
+        <div class="sec-pad">
+            <div class="head-center reveal">
+                <p class="sec-eyebrow">Quick Tips</p>
+                <h2 class="sec-title">Small habits, <span>big difference</span></h2>
+                <p class="sec-desc">Four things our coaches tell every new member.</p>
+            </div>
+            <div class="tips-grid">
+                <div class="tip reveal delay-1"><span class="material-symbols-outlined">water_drop</span>
+                    <h3>Drink water early</h3>
+                    <p>Have a glass when you wake up and keep a bottle with you during training.</p>
+                </div>
+                <div class="tip reveal delay-2"><span class="material-symbols-outlined">bedtime</span>
+                    <h3>Protect your sleep</h3>
+                    <p>Aim for a steady bedtime. Good sleep helps recovery and appetite control.</p>
+                </div>
+                <div class="tip reveal delay-3"><span class="material-symbols-outlined">directions_walk</span>
+                    <h3>Walk after meals</h3>
+                    <p>Ten easy minutes after eating supports digestion and adds daily movement.</p>
+                </div>
+                <div class="tip reveal delay-4"><span class="material-symbols-outlined">self_improvement</span>
+                    <h3>Warm up first</h3>
+                    <p>Five minutes of light movement prepares your joints and lowers injury risk.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-box">
+            <h2 class="reveal-left">Ready to put the advice into practice?</h2>
+            <a href="404.html" class="section-btn reveal-right">Claim Free Week<span
+                    class="material-symbols-outlined">arrow_right_alt</span></a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer1">
+            <div class="foot1">
+                <a href="index.html" class="logoimage"><img src="./src/logo.webp" alt="Vitalyn Logo"></a>
+                <p>We are passionate about helping people of every age and fitness level build strong, healthy and
+                    balanced lives.</p>
+                <div class="footer-sotial-links">
+                    <a href="404.html" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="404.html" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="404.html" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="404.html" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+                </div>
+            </div>
+            <div>
+                <h2>Quick Links</h2>
+                <div class="links">
+                    <a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blogs</a><a
+                        href="service.html">Services</a><a href="contact.html">Contact</a>
+                </div>
+            </div>
+            <div>
+                <h2>Our Studio</h2>
+                <div class="links">
+                    <a href="404.html">Classes</a><a href="404.html">Personal Training</a><a
+                        href="404.html">Nutrition</a><a href="404.html">Recovery</a><a href="404.html">Memberships</a>
+                </div>
+            </div>
+            <div class="foot3">
+                <h2>Newsletter</h2>
+                <p>Get weekly workouts, healthy recipes and studio updates in your inbox.</p>
+                <div class="footerform">
+                    <input type="email" id="foot-email" placeholder="Enter email" aria-label="Email address">
+                    <button id="sub-btn" class="herobtn">Subscribe</button>
+                    <p class="foot-error"></p>
+                </div>
+            </div>
+        </div>
+        <div class="footer2">
+            <p>Copyright @ 2026 Vitalyn Fitness &amp; Wellness</p>
+            <div><a href="404.html">Terms &amp; Conditions</a> | <a href="404.html">Privacy Policy</a></div>
+        </div>
+    </footer>
+    <script>
+        // ----- Image fallback -----
+        document.addEventListener('error', function (e) {
+            const t = e.target;
+            if (t && t.tagName === 'IMG' && !t.dataset.fb) {
+                t.dataset.fb = '1';
+                t.src = 'https://picsum.photos/seed/' + encodeURIComponent((t.alt || 'vitalyn').replace(/\s+/g, '-')) + '/800/1000';
+            }
+        }, true);
+
+        // ----- Sidebar -----
+        const sidebar = document.querySelector('.sidebar');
+        const dim = document.createElement('div');
+        dim.className = 'page-dim';
+        document.body.appendChild(dim);
+        const openSide = () => { sidebar.classList.add('open'); dim.classList.add('show'); document.body.style.overflow = 'hidden'; };
+        const closeSide = () => { sidebar.classList.remove('open'); dim.classList.remove('show'); document.body.style.overflow = ''; };
+        document.querySelector('.menubtn').addEventListener('click', openSide);
+        sidebar.querySelector('.closebtn').addEventListener('click', closeSide);
+        dim.addEventListener('click', closeSide);
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSide(); });
+        sidebar.querySelectorAll('.sidemenus a').forEach(a => a.addEventListener('click', closeSide));
+        window.addEventListener('resize', () => { if (window.innerWidth > 950) closeSide(); });
+
+        // ----- Buttons that go to coming-soon / login -----
+        document.querySelectorAll('.errorpage').forEach(el => el.addEventListener('click', () => { window.location.href = '404.html'; }));
+        document.querySelector('.logicon').addEventListener('click', () => { window.location.href = 'login.html'; });
+
+        // ----- Scroll reveal -----
+        const revealObs = new IntersectionObserver((entries) => {
+            entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('show'); revealObs.unobserve(en.target); } });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObs.observe(el));
+
+        // ----- Newsletter validation -----
+        const emailInput = document.getElementById('foot-email');
+        const subBtn = document.getElementById('sub-btn');
+        const footError = document.querySelector('.foot-error');
+        subBtn.addEventListener('click', () => {
+            const val = emailInput.value.trim();
+            footError.classList.remove('ok');
+            if (!val) { footError.textContent = 'Please enter your email address.'; return; }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val)) { footError.textContent = 'Enter a valid email, like name@example.com.'; return; }
+            footError.classList.add('ok');
+            footError.textContent = 'Subscribed. Check your inbox for this week\u2019s workouts.';
+            emailInput.value = '';
+        });
+        emailInput.addEventListener('keydown', e => { if (e.key === 'Enter') subBtn.click(); });
+
+
+        // ----- Blog filter + search -----
+        const posts = [...document.querySelectorAll('.post')];
+        const chipBtns = [...document.querySelectorAll('.chips button')];
+        const qInput = document.getElementById('blog-q');
+        const noPosts = document.getElementById('no-posts');
+        let activeCat = 'All';
+        function applyFilters() {
+            const q = qInput.value.trim().toLowerCase();
+            let shown = 0;
+            posts.forEach(p => {
+                const ok = (activeCat === 'All' || p.dataset.cat === activeCat) && (!q || p.textContent.toLowerCase().includes(q));
+                p.hidden = !ok;
+                if (ok) { shown++; p.classList.add('show'); }
+            });
+            noPosts.hidden = shown > 0;
+        }
+        chipBtns.forEach(b => b.addEventListener('click', () => {
+            chipBtns.forEach(x => x.classList.remove('on'));
+            b.classList.add('on');
+            activeCat = b.dataset.cat;
+            applyFilters();
+        }));
+        qInput.addEventListener('input', applyFilters);
+        document.getElementById('reset-filters').addEventListener('click', () => {
+            qInput.value = ''; activeCat = 'All';
+            chipBtns.forEach(x => x.classList.toggle('on', x.dataset.cat === 'All'));
+            applyFilters();
+        });
+    </script>
+</body>
+
+</html>

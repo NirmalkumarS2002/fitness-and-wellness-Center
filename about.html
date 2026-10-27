@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,-50..200" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..800&family=Bricolage+Grotesque:opsz,wght@12..96,500..800&display=swap"
+        rel="stylesheet">
+    <title>About | Vitalyn Fitness &amp; Wellness Studio</title>
+    <script>document.documentElement.classList.add('js');</script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: clip;
+            max-width: 100%;
+        }
+
+        body {
+            overflow-x: clip;
+            max-width: 100%;
+            font-family: "DM Sans", sans-serif;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        :root {
+            --pcolor: #e8552d;
+            --dark: #10302b;
+            --sage: #e6eee3;
+            --sand: #f7f4ee;
+            --head: "Bricolage Grotesque", sans-serif;
+        }
+
+        .logoimage {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .logoimage img {
+            height: 46px;
+            width: auto;
+            max-width: 100%;
+            display: block;
+        }
+
+        /* shared */
+        .sec-pad {
+            padding: 100px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .sec-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--sage);
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 14px;
+            padding: 7px 16px;
+            border-radius: 40px;
+            margin-bottom: 18px;
+        }
+
+        .sec-eyebrow::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--pcolor);
+        }
+
+        .sec-title {
+            font-family: var(--head);
+            font-size: 50px;
+            font-weight: 700;
+            color: var(--dark);
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+            overflow-wrap: break-word;
+        }
+
+        .sec-title span {
+            color: var(--pcolor);
+            font-style: italic;
+        }
+
+        .sec-desc {
+            font-size: 17px;
+            line-height: 1.7;
+            color: #55635f;
+            max-width: 560px;
+        }
+
+        .section-btn {
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 30px;
+            background: var(--dark);
+            border: none;
+            color: #fff;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 28px;
+            cursor: pointer;
+        }
+
+        .section-btn span {
+            transition: .4s ease;
+            font-size: 22px;
+        }
+
+        .section-btn::before {
+            content: "";
+            height: 100%;
+            width: 0;
+            background: var(--pcolor);
+            transition: width .4s ease;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .section-btn:hover::before {
+            width: 100%;
+        }
+
+        .section-btn:hover span {
+            transform: translateX(5px);
+        }
+
+        .head-center {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 60px;
+        }
+
+        .head-center .sec-desc {
+            margin-inline: auto;
+        }
+
+        @media (max-width: 700px) {
+            .sec-pad {
+                padding: 70px 20px;
+            }
+
+            .sec-title {
+                font-size: clamp(30px, 8.5vw, 42px);
+                letter-spacing: -1px;
+            }
+
+            .head-center {
+                margin-bottom: 40px;
+            }
+        }
+
+        /* page banner (replaces hero on this page) */
+        .page-banner {
+            background: var(--dark);
+            color: #fff;
+            padding: 150px 20px 70px;
+            text-align: center;
+        }
+
+        .page-banner h1 {
+            font-family: var(--head);
+            font-size: clamp(36px, 6vw, 72px);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1;
+        }
+
+        .page-banner h1 em {
+            color: var(--pcolor);
+        }
+
+        .page-banner p {
+            max-width: 520px;
+            margin: 18px auto 0;
+            color: #cfe0d9;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        /* header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            max-width: 100vw;
+            z-index: 100;
+            transition: background .4s ease, box-shadow .4s ease;
+        }
+
+        .header.scrolled {
+            background: var(--dark);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, .18);
+        }
+
+        .navbar {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 18px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            transition: padding .4s ease;
+        }
+
+        .header.scrolled .navbar {
+            padding-block: 12px;
+        }
+
+        .menus {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #ffffff26;
+            padding: 6px;
+            border-radius: 50px;
+        }
+
+        .header.scrolled .menus {
+            background: #ffffff12;
+        }
+
+        .menus a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 10px 22px;
+            border-radius: 40px;
+            transition: .3s ease;
+        }
+
+        .menus a:hover {
+            background: #ffffff26;
+        }
+
+        .menus a.active {
+            background: var(--pcolor);
+        }
+
+        .navicons {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-shrink: 0;
+        }
+
+        .navicons>div {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navicons .material-symbols-outlined {
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .navicons>div .errorpage,
+        .navicons>div .logicon {
+            height: 42px;
+            width: 42px;
+            border-radius: 50%;
+            border: 1px solid #ffffff55;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            transition: .3s ease;
+        }
+
+        .navicons>div .errorpage:hover,
+        .navicons>div .logicon:hover {
+            background: var(--pcolor);
+            border-color: var(--pcolor);
+        }
+
+        .menubtn {
+            font-size: 32px;
+        }
+
+        .loginbtn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 15px;
+            text-decoration: none;
+            padding: 11px 24px;
+            border-radius: 50px;
+            transition: .3s ease;
+        }
+
+        .loginbtn span {
+            color: var(--dark) !important;
+            font-size: 20px;
+        }
+
+        .loginbtn:hover {
+            background: var(--pcolor);
+            color: #fff;
+        }
+
+        .loginbtn:hover span {
+            color: #fff !important;
+        }
+
+        @media (min-width:951px) {
+            .menubtn {
+                display: none;
+            }
+        }
+
+        @media (max-width:950px) {
+
+            .menus,
+            .loginbtn,
+             .navicons>div .errorpage {
+                display: none;
+            }
+
+            .navbar {
+                padding: 12px 16px;
+                gap: 10px;
+            }
+
+            .logoimage img {
+                height: 36px;
+            }
+
+            .navicons>div .errorpage {
+                height: 40px;
+                width: 40px;
+            }
+        }
+
+        /* sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100vh;
+            height: 100dvh;
+            width: 380px;
+            max-width: 88vw;
+            background: var(--sand);
+            z-index: 300;
+            padding: 30px 28px;
+            overflow-y: auto;
+            transform: translateX(105%);
+            visibility: hidden;
+            transition: transform .5s ease, visibility 0s linear .5s;
+            box-shadow: -10px 0 40px rgba(0, 0, 0, .2);
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
+            visibility: visible;
+            transition: transform .5s ease, visibility 0s;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            background: var(--dark);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: .3s ease;
+        }
+
+        .sidebar .closebtn:hover {
+            background: var(--pcolor);
+            transform: rotate(90deg);
+        }
+
+        .sidebar .logoimage img {
+            height: 44px;
+            filter: brightness(0) saturate(100%);
+        }
+
+        .sidemenus {
+            list-style: none;
+            margin: 28px 0 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidemenus li {
+            border-bottom: 1px solid #10302b1f;
+        }
+
+        .sidemenus a {
+            display: block;
+            padding: 13px 0;
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 17px;
+            transition: .3s ease;
+        }
+
+        .sidemenus a:hover,
+        .sidemenus li.active a {
+            color: var(--pcolor);
+            padding-left: 8px;
+        }
+
+        .sidebar>p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #55635f;
+            margin-bottom: 20px;
+        }
+
+        .sideimgwrap {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 170px;
+            margin-bottom: 24px;
+            background: var(--dark);
+        }
+
+        .sideimgwrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sidebtn {
+            position: absolute;
+            left: 50%;
+            bottom: 16px;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--pcolor);
+            color: #fff;
+            border: none;
+            padding: 12px 26px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-family: inherit;
+        }
+
+        .sidebtn:hover {
+            background: var(--dark);
+        }
+
+        .sidebar-details {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar-details>a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .sidebar-details>a span {
+            color: var(--pcolor);
+        }
+
+        .sideicons {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .sideicons p {
+            font-weight: 700;
+            color: var(--dark);
+            white-space: nowrap;
+        }
+
+        .sidebar .footer-sotial-links a {
+            background: var(--dark);
+            color: #fff;
+        }
+
+        .page-dim {
+            position: fixed;
+            inset: 0;
+            background: rgba(8, 24, 21, .6);
+            z-index: 250;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .4s ease;
+        }
+
+        .page-dim.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* footer */
+        .footer {
+            background: #0a211d;
+            color: #cfdcd6;
+        }
+
+        .footer1 {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 30px 50px;
+            display: grid;
+            grid-template-columns: 1.4fr .8fr .8fr 1.2fr;
+            gap: 50px;
+        }
+
+        .footer1>* {
+            min-width: 0;
+        }
+
+        .foot1 .logoimage {
+            margin-bottom: 20px;
+        }
+
+        .foot1 p,
+        .foot3 p {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 22px;
+            color: #b3c4bd;
+        }
+
+        .footer h2 {
+            font-family: var(--head);
+            font-size: 22px;
+            color: #fff;
+            margin-bottom: 22px;
+        }
+
+        .footer-sotial-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .footer-sotial-links a {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            background: #ffffff14;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: .3s ease;
+        }
+
+        .footer-sotial-links a:hover {
+            background: var(--pcolor);
+            transform: translateY(-4px);
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .links a {
+            color: #b3c4bd;
+            text-decoration: none;
+            font-size: 15px;
+            transition: .3s ease;
+            width: fit-content;
+        }
+
+        .links a:hover {
+            color: var(--pcolor);
+            padding-left: 6px;
+        }
+
+        .footerform {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .footerform input {
+            flex: 1 1 180px;
+            min-width: 0;
+            padding: 14px 20px;
+            border-radius: 50px;
+            border: 1px solid #ffffff2a;
+            background: #ffffff0f;
+            color: #fff;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: .3s ease;
+        }
+
+        .footerform input::placeholder {
+            color: #8ea39b;
+        }
+
+        .footerform input:focus {
+            border-color: var(--pcolor);
+        }
+
+        .footerform .herobtn {
+            display: flex;
+            align-items: center;
+            padding: 14px 26px;
+            font-size: 15px;
+            font-weight: 600;
+            font-family: inherit;
+            background: var(--pcolor);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .footerform .herobtn::before {
+            content: "";
+            height: 100%;
+            width: 0;
+            background: #fff;
+            transition: width .4s ease;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .footerform .herobtn:hover {
+            color: var(--dark);
+        }
+
+        .footerform .herobtn:hover::before {
+            width: 100%;
+        }
+
+        .foot-error {
+            flex-basis: 100%;
+            font-size: 14px;
+            margin: 4px 0 0 !important;
+            min-height: 18px;
+            color: #ff8d72 !important;
+        }
+
+        .foot-error.ok {
+            color: #7fe0a8 !important;
+        }
+
+        .footer2 {
+            border-top: 1px solid #ffffff1a;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            color: #8ea39b;
+        }
+
+        .footer2 a {
+            color: #b3c4bd;
+            text-decoration: none;
+            margin-inline: 6px;
+        }
+
+        .footer2 a:hover {
+            color: var(--pcolor);
+        }
+
+        @media (max-width:1000px) {
+            .footer1 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width:560px) {
+            .footer1 {
+                grid-template-columns: 1fr;
+                padding: 60px 20px 40px;
+            }
+
+            .footer2 {
+                flex-direction: column;
+                text-align: center;
+                padding-inline: 20px;
+            }
+        }
+
+        /* reveal */
+        .js .reveal,
+        .js .reveal-left,
+        .js .reveal-right {
+            opacity: 0;
+            transition: opacity .8s ease, transform .8s ease;
+        }
+
+        .js .reveal {
+            transform: translateY(40px);
+        }
+
+        .js .reveal-left {
+            transform: translateX(-50px);
+        }
+
+        .js .reveal-right {
+            transform: translateX(50px);
+        }
+
+        .js .reveal.show,
+        .js .reveal-left.show,
+        .js .reveal-right.show {
+            opacity: 1;
+            transform: none;
+        }
+
+        .delay-1 {
+            transition-delay: .1s !important;
+        }
+
+        .delay-2 {
+            transition-delay: .25s !important;
+        }
+
+        .delay-3 {
+            transition-delay: .4s !important;
+        }
+
+        .delay-4 {
+            transition-delay: .55s !important;
+        }
+
+        @media (max-width: 800px) {
+
+            .js .reveal-left,
+            .js .reveal-right {
+                transform: translateY(30px);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .js .reveal,
+            .js .reveal-left,
+            .js .reveal-right {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+
+
+        /* ===== STORY ===== */
+        .story {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .story>* {
+            min-width: 0;
+        }
+
+        .story-img {
+            position: relative;
+            padding-bottom: 50px;
+        }
+
+        .story-img img {
+            display: block;
+            object-fit: cover;
+            background: var(--sage);
+        }
+
+        .story-img>img:first-of-type {
+            width: 80%;
+            height: 520px;
+            border-radius: 200px 200px 20px 20px;
+        }
+
+        .story-img .img-small {
+            position: absolute;
+            width: 48%;
+            height: 260px;
+            bottom: 0;
+            right: 0;
+            border-radius: 20px;
+            border: 8px solid #fff;
+        }
+
+        .est-badge {
+            position: absolute;
+            top: 40px;
+            right: 5%;
+            background: var(--pcolor);
+            color: #fff;
+            border-radius: 50%;
+            height: 120px;
+            width: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.3;
+            z-index: 2;
+        }
+
+        .est-badge b {
+            font-family: var(--head);
+            font-size: 32px;
+            display: block;
+        }
+
+        .story-text p {
+            font-size: 17px;
+            line-height: 1.75;
+            color: #55635f;
+            max-width: 540px;
+            margin-bottom: 16px;
+        }
+
+        @media (max-width: 900px) {
+            .story {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .story-img>img:first-of-type {
+                width: 100%;
+                height: 380px;
+            }
+
+            .story-img .img-small {
+                display: none;
+            }
+
+            .est-badge {
+                right: 12px;
+            }
+        }
+
+        /* ===== MISSION / VISION ===== */
+        .mv-section {
+            background: var(--sage);
+        }
+
+        .mv-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+        }
+
+        .mv-card {
+            border-radius: 28px;
+            padding: 44px 40px;
+            background: #fff;
+        }
+
+        .mv-card.dark {
+            background: var(--dark);
+            color: #fff;
+        }
+
+        .mv-card .material-symbols-outlined {
+            height: 60px;
+            width: 60px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--sage);
+            color: var(--dark);
+            font-size: 30px;
+            margin-bottom: 22px;
+        }
+
+        .mv-card.dark .material-symbols-outlined {
+            background: var(--pcolor);
+            color: #fff;
+        }
+
+        .mv-card h2 {
+            font-family: var(--head);
+            font-size: 30px;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .mv-card.dark h2 {
+            color: #fff;
+        }
+
+        .mv-card p {
+            font-size: 16px;
+            line-height: 1.75;
+            color: #55635f;
+        }
+
+        .mv-card.dark p {
+            color: #cfdcd6;
+        }
+
+        @media (max-width: 800px) {
+            .mv-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .mv-card {
+                padding: 34px 26px;
+            }
+        }
+
+        /* ===== VALUES ===== */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+
+        .value {
+            border-top: 3px solid var(--dark);
+            padding-top: 22px;
+            transition: border-color .3s ease;
+        }
+
+        .value:hover {
+            border-top-color: var(--pcolor);
+        }
+
+        .value .material-symbols-outlined {
+            color: var(--pcolor);
+            font-size: 36px;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .value h3 {
+            font-family: var(--head);
+            font-size: 22px;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .value p {
+            font-size: 15px;
+            line-height: 1.65;
+            color: #66736f;
+        }
+
+        @media (max-width: 950px) {
+            .values-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 36px 22px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== JOURNEY (real sequence, so a timeline fits) ===== */
+        .journey {
+            background: var(--sand);
+        }
+
+        .tl {
+            max-width: 820px;
+            margin: 0 auto;
+            position: relative;
+            padding-left: 34px;
+        }
+
+        .tl::before {
+            content: "";
+            position: absolute;
+            left: 8px;
+            top: 8px;
+            bottom: 8px;
+            width: 3px;
+            background: #10302b26;
+            border-radius: 3px;
+        }
+
+        .tl-item {
+            position: relative;
+            padding-bottom: 38px;
+        }
+
+        .tl-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .tl-item::before {
+            content: "";
+            position: absolute;
+            left: -34px;
+            top: 6px;
+            height: 19px;
+            width: 19px;
+            border-radius: 50%;
+            background: #fff;
+            border: 4px solid var(--pcolor);
+        }
+
+        .tl-item .yr {
+            font-family: var(--head);
+            font-weight: 800;
+            font-size: 28px;
+            color: var(--pcolor);
+            line-height: 1;
+        }
+
+        .tl-item h3 {
+            font-family: var(--head);
+            font-size: 22px;
+            color: var(--dark);
+            margin: 8px 0 6px;
+        }
+
+        .tl-item p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #55635f;
+        }
+
+        /* ===== TEAM ===== */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .team-card {
+            text-align: center;
+        }
+
+        .team-img {
+            width: 220px;
+            height: 220px;
+            max-width: 100%;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 6px solid #fff;
+            box-shadow: 0 0 0 3px var(--pcolor);
+            transition: .4s ease;
+            background: var(--sage);
+        }
+
+        .team-card:hover .team-img {
+            box-shadow: 0 0 0 3px var(--pcolor), 0 0 0 14px #e8552d22;
+        }
+
+        .team-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .team-card h3 {
+            font-family: var(--head);
+            font-size: 22px;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .team-card .role {
+            font-size: 15px;
+            color: var(--pcolor);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .team-card .cert {
+            font-size: 14px;
+            color: #66736f;
+            line-height: 1.5;
+            max-width: 220px;
+            margin: 0 auto 14px;
+        }
+
+        .team-social {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .team-social a {
+            height: 36px;
+            width: 36px;
+            border-radius: 50%;
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: .3s ease;
+        }
+
+        .team-social a:hover {
+            background: var(--pcolor);
+        }
+
+        @media (max-width: 950px) {
+            .team-grid {
+                grid-template-columns: 1fr 1fr;
+                row-gap: 50px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== STATS ===== */
+        .stats-section {
+            background-color: var(--dark);
+            background-image: linear-gradient(rgba(16, 48, 43, .9), rgba(16, 48, 43, .9)), url("./src/image_18.webp");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .stat-box {
+            min-width: 0;
+            text-align: center;
+            border-right: 1px solid #ffffff2a;
+            padding: 0 6px;
+        }
+
+        .stat-box:last-child {
+            border-right: none;
+        }
+
+        .stat-box .material-symbols-outlined {
+            font-size: 38px;
+            color: var(--pcolor);
+            margin-bottom: 12px;
+        }
+
+        .stat-num {
+            font-family: var(--head);
+            font-size: clamp(34px, 5vw, 64px);
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            gap: 2px;
+            letter-spacing: -2px;
+            white-space: nowrap;
+        }
+
+        .stat-box p {
+            color: #c9d8d2;
+            font-size: 16px;
+            margin-top: 6px;
+        }
+
+        @media (max-width: 800px) {
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px 14px;
+            }
+
+            .stat-box {
+                border-right: none;
+            }
+
+            .stat-num {
+                font-size: clamp(32px, 9.5vw, 52px);
+                letter-spacing: -1px;
+            }
+
+            .stat-box p {
+                font-size: 14px;
+            }
+        }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            padding: 70px 20px;
+            background: var(--pcolor);
+        }
+
+        .cta-box {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .cta-box h2 {
+            font-family: var(--head);
+            font-size: 44px;
+            font-weight: 700;
+            color: #fff;
+            max-width: 650px;
+            line-height: 1.15;
+            letter-spacing: -1px;
+        }
+
+        .cta-box .section-btn {
+            background: #fff;
+            color: var(--dark);
+            margin-top: 0;
+            flex-shrink: 0;
+        }
+
+        .cta-box .section-btn::before {
+            background: var(--dark);
+        }
+
+        .cta-box .section-btn:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 800px) {
+            .cta-box {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .cta-box h2 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <header class="header scrolled">
+        <div class="navbar">
+            <a href="index.html" class="logoimage"><img src="./src/logo.webp" alt="Vitalyn Logo"></a>
+            <ul class="menus">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="blog.html">Blogs</a></li>
+                <li><a href="service.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="navicons">
+                <div>
+                    <span class="material-symbols-outlined errorpage">call</span>
+                    <span class="material-symbols-outlined logicon">person</span>
+                    <span class="material-symbols-outlined menubtn">menu</span>
+                </div>
+                <a href="404.html" class="loginbtn">Join<span class="material-symbols-outlined">arrow_forward</span></a>
+            </div>
+        </div>
+    </header>
+
+    <aside class="sidebar" aria-label="Mobile menu">
+        <span class="material-symbols-outlined closebtn">close</span>
+        <a href="index.html" class="logoimage"><img src="./src/logo.webp" alt="Vitalyn Logo"></a>
+        <ul class="sidemenus">
+            <li><a href="index.html">Home</a></li>
+            <li class="active"><a href="about.html">About</a></li>
+            <li><a href="blog.html">Blogs</a></li>
+            <li><a href="service.html">Services</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <p>Train smarter, eat better and recover well with a fitness and wellness studio built around your goals.</p>
+        <div class="sideimgwrap">
+            <img loading="lazy" src="./src/image_15.webp" alt="Studio training session">
+            <button class="sidebtn errorpage">Join Now<span
+                    class="material-symbols-outlined">arrow_right_alt</span></button>
+        </div>
+        <div class="sidebar-details">
+            <a href="404.html"><span class="material-symbols-outlined">call</span>+91 12345 67890</a>
+            <a href="404.html"><span class="material-symbols-outlined">location_on</span> Anna Nagar, Chennai, India</a>
+            <div class="sideicons">
+                <p>Follow us:</p>
+                <div class="footer-sotial-links">
+                    <a href="404.html" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="404.html" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="404.html" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="404.html" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+
+
+    <section class="page-banner">
+        <h1>Built around <em>your wellbeing</em></h1>
+        <p>Meet the people, values and story behind Vitalyn Fitness &amp; Wellness.</p>
+    </section>
+
+    <!-- STORY -->
+    <section class="sec-pad story">
+        <div class="story-img reveal-left">
+            <div class="est-badge"><b>12+</b>Years of<br>healthy living</div>
+            <img loading="lazy" decoding="async" src="./src/image_11.webp" alt="Member training in the studio">
+            <img loading="lazy" decoding="async" class="img-small" src="./src/image_23.webp" alt="Group fitness class">
+        </div>
+        <div class="story-text reveal-right">
+            <p class="sec-eyebrow">Our Story</p>
+            <h2 class="sec-title">From one small room to a <span>wellness home</span></h2>
+            <p>Vitalyn started with a simple idea: fitness should feel welcoming, not intimidating. We began with a few
+                weights and a lot of patience.</p>
+            <p>Today we bring strength training, yoga, nutrition and recovery together, so you can look after your whole
+                self in one place.</p>
+            <a href="404.html" class="section-btn">Visit the studio<span
+                    class="material-symbols-outlined">arrow_right_alt</span></a>
+        </div>
+    </section>
+
+    <!-- MISSION / VISION -->
+    <section class="mv-section">
+        <div class="sec-pad">
+            <div class="mv-grid">
+                <div class="mv-card reveal delay-1">
+                    <span class="material-symbols-outlined">flag</span>
+                    <h2>Our mission</h2>
+                    <p>To make healthy living simple and enjoyable for people of every age and fitness level, with
+                        expert guidance and a supportive community.</p>
+                </div>
+                <div class="mv-card dark reveal delay-2">
+                    <span class="material-symbols-outlined">visibility</span>
+                    <h2>Our vision</h2>
+                    <p>A city where moving well, eating well and resting well are everyday habits, not once-a-year
+                        resolutions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VALUES -->
+    <section class="sec-pad">
+        <div class="head-center reveal">
+            <p class="sec-eyebrow">What We Stand For</p>
+            <h2 class="sec-title">Values we <span>train by</span></h2>
+            <p class="sec-desc">These principles shape every class, plan and conversation.</p>
+        </div>
+        <div class="values-grid">
+            <div class="value reveal delay-1"><span class="material-symbols-outlined">favorite</span>
+                <h3>Care first</h3>
+                <p>We listen before we plan. Every programme starts with your goals, health history and schedule.</p>
+            </div>
+            <div class="value reveal delay-2"><span class="material-symbols-outlined">verified</span>
+                <h3>Honest coaching</h3>
+                <p>No crash diets or miracle promises. We share what works and why.</p>
+            </div>
+            <div class="value reveal delay-3"><span class="material-symbols-outlined">diversity_3</span>
+                <h3>Open to everyone</h3>
+                <p>Beginners, seniors and athletes train side by side in a judgement-free space.</p>
+            </div>
+            <div class="value reveal delay-4"><span class="material-symbols-outlined">trending_up</span>
+                <h3>Steady progress</h3>
+                <p>Small, measurable wins every month build habits that last.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- JOURNEY -->
+    <section class="journey">
+        <div class="sec-pad">
+            <div class="head-center reveal">
+                <p class="sec-eyebrow">Our Journey</p>
+                <h2 class="sec-title">Twelve years of <span>growing together</span></h2>
+            </div>
+            <div class="tl">
+                <div class="tl-item reveal">
+                    <div class="yr">2014</div>
+                    <h3>A small training room</h3>
+                    <p>Vitalyn opened with two coaches and a handful of free weights in Anna Nagar.</p>
+                </div>
+                <div class="tl-item reveal">
+                    <div class="yr">2017</div>
+                    <h3>Yoga and nutrition join in</h3>
+                    <p>We added mindful movement classes and our first registered dietitian.</p>
+                </div>
+                <div class="tl-item reveal">
+                    <div class="yr">2021</div>
+                    <h3>The recovery lounge opens</h3>
+                    <p>Steam, stretch zone and massage chairs made recovery part of every plan.</p>
+                </div>
+                <div class="tl-item reveal">
+                    <div class="yr">2024</div>
+                    <h3>Moving into a full studio</h3>
+                    <p>A larger space with three training floors, a juice bar and 40+ weekly classes.</p>
+                </div>
+                <div class="tl-item reveal">
+                    <div class="yr">2026</div>
+                    <h3>Thousands of members strong</h3>
+                    <p>Our community keeps growing, and so does our team of certified coaches.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="sec-pad">
+        <div class="head-center reveal">
+            <p class="sec-eyebrow">Our Team</p>
+            <h2 class="sec-title">Coaches who <span>walk with you</span></h2>
+            <p class="sec-desc">Certified, experienced and friendly. Every coach holds recognised fitness and first-aid
+                certifications.</p>
+        </div>
+        <div class="team-grid">
+            <div class="team-card reveal delay-1">
+                <div class="team-img"><img loading="lazy" decoding="async" src="./src/img14.webp"
+                        alt="Aravind Iyer, Head Strength Coach"></div>
+                <h3>Aravind Iyer</h3>
+                <p class="role">Head Strength Coach</p>
+                <p class="cert">Certified strength and conditioning specialist, first-aid trained</p>
+                <div class="team-social"><a href="404.html" aria-label="Instagram"><i
+                            class="fa-brands fa-instagram"></i></a><a href="404.html" aria-label="X"><i
+                            class="fa-brands fa-x-twitter"></i></a></div>
+            </div>
+            <div class="team-card reveal delay-2">
+                <div class="team-img"><img loading="lazy" decoding="async" src="./src/img13.webp"
+                        alt="Meera Nair, Clinical Dietitian"></div>
+                <h3>Meera Nair</h3>
+                <p class="role">Clinical Dietitian</p>
+                <p class="cert">Registered dietitian focused on realistic, balanced eating</p>
+                <div class="team-social"><a href="404.html" aria-label="Instagram"><i
+                            class="fa-brands fa-instagram"></i></a><a href="404.html" aria-label="X"><i
+                            class="fa-brands fa-x-twitter"></i></a></div>
+            </div>
+            <div class="team-card reveal delay-3">
+                <div class="team-img"><img loading="lazy" decoding="async" src="./src/img15.webp"
+                        alt="Ravi Shankar, Yoga &amp; Mobility Lead"></div>
+                <h3>Ravi Shankar</h3>
+                <p class="role">Yoga &amp; Mobility Lead</p>
+                <p class="cert">Certified yoga instructor with a focus on posture and mobility</p>
+                <div class="team-social"><a href="404.html" aria-label="Instagram"><i
+                            class="fa-brands fa-instagram"></i></a><a href="404.html" aria-label="X"><i
+                            class="fa-brands fa-x-twitter"></i></a></div>
+            </div>
+            <div class="team-card reveal delay-4">
+                <div class="team-img"><img loading="lazy" decoding="async" src="./src/img16.webp"
+                        alt="Sana Fatima, HIIT &amp; Cardio Coach"></div>
+                <h3>Sana Fatima</h3>
+                <p class="role">HIIT &amp; Cardio Coach</p>
+                <p class="cert">Certified group fitness instructor, first-aid trained</p>
+                <div class="team-social"><a href="404.html" aria-label="Instagram"><i
+                            class="fa-brands fa-instagram"></i></a><a href="404.html" aria-label="X"><i
+                            class="fa-brands fa-x-twitter"></i></a></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="stats-section">
+        <div class="sec-pad">
+            <div class="stats-grid">
+                <div class="stat-box reveal delay-1"><span class="material-symbols-outlined">groups</span>
+                    <div class="stat-num"><span class="counter" data-target="5800">0</span>+</div>
+                    <p>Active Members</p>
+                </div>
+                <div class="stat-box reveal delay-2"><span class="material-symbols-outlined">sports_gymnastics</span>
+                    <div class="stat-num"><span class="counter" data-target="45">0</span>+</div>
+                    <p>Certified Trainers</p>
+                </div>
+                <div class="stat-box reveal delay-3"><span class="material-symbols-outlined">event_available</span>
+                    <div class="stat-num"><span class="counter" data-target="40">0</span>+</div>
+                    <p>Weekly Classes</p>
+                </div>
+                <div class="stat-box reveal delay-4"><span class="material-symbols-outlined">favorite</span>
+                    <div class="stat-num"><span class="counter" data-target="96">0</span>%</div>
+                    <p>Members Who Stay</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-box">
+            <h2 class="reveal-left">Come meet the team. Your first week is free.</h2>
+            <a href="404.html" class="section-btn reveal-right">Claim Free Week<span
+                    class="material-symbols-outlined">arrow_right_alt</span></a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer1">
+            <div class="foot1">
+                <a href="index.html" class="logoimage"><img src="./src/logo.webp" alt="Vitalyn Logo"></a>
+                <p>We are passionate about helping people of every age and fitness level build strong, healthy and
+                    balanced lives.</p>
+                <div class="footer-sotial-links">
+                    <a href="404.html" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="404.html" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="404.html" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="404.html" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+                </div>
+            </div>
+            <div>
+                <h2>Quick Links</h2>
+                <div class="links">
+                    <a href="index.html">Home</a><a href="about.html">About</a><a href="blog.html">Blogs</a><a
+                        href="service.html">Services</a><a href="contact.html">Contact</a>
+                </div>
+            </div>
+            <div>
+                <h2>Our Studio</h2>
+                <div class="links">
+                    <a href="404.html">Classes</a><a href="404.html">Personal Training</a><a
+                        href="404.html">Nutrition</a><a href="404.html">Recovery</a><a href="404.html">Memberships</a>
+                </div>
+            </div>
+            <div class="foot3">
+                <h2>Newsletter</h2>
+                <p>Get weekly workouts, healthy recipes and studio updates in your inbox.</p>
+                <div class="footerform">
+                    <input type="email" id="foot-email" placeholder="Enter email" aria-label="Email address">
+                    <button id="sub-btn" class="herobtn">Subscribe</button>
+                    <p class="foot-error"></p>
+                </div>
+            </div>
+        </div>
+        <div class="footer2">
+            <p>Copyright @ 2026 Vitalyn Fitness &amp; Wellness</p>
+            <div><a href="404.html">Terms &amp; Conditions</a> | <a href="404.html">Privacy Policy</a></div>
+        </div>
+    </footer>
+    <script>
+        // ----- Image fallback -----
+        document.addEventListener('error', function (e) {
+            const t = e.target;
+            if (t && t.tagName === 'IMG' && !t.dataset.fb) {
+                t.dataset.fb = '1';
+                t.src = 'https://picsum.photos/seed/' + encodeURIComponent((t.alt || 'vitalyn').replace(/\s+/g, '-')) + '/800/1000';
+            }
+        }, true);
+
+        // ----- Sidebar -----
+        const sidebar = document.querySelector('.sidebar');
+        const dim = document.createElement('div');
+        dim.className = 'page-dim';
+        document.body.appendChild(dim);
+        const openSide = () => { sidebar.classList.add('open'); dim.classList.add('show'); document.body.style.overflow = 'hidden'; };
+        const closeSide = () => { sidebar.classList.remove('open'); dim.classList.remove('show'); document.body.style.overflow = ''; };
+        document.querySelector('.menubtn').addEventListener('click', openSide);
+        sidebar.querySelector('.closebtn').addEventListener('click', closeSide);
+        dim.addEventListener('click', closeSide);
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSide(); });
+        sidebar.querySelectorAll('.sidemenus a').forEach(a => a.addEventListener('click', closeSide));
+        window.addEventListener('resize', () => { if (window.innerWidth > 950) closeSide(); });
+
+        // ----- Buttons that go to coming-soon / login -----
+        document.querySelectorAll('.errorpage').forEach(el => el.addEventListener('click', () => { window.location.href = '404.html'; }));
+        document.querySelector('.logicon').addEventListener('click', () => { window.location.href = 'login.html'; });
+
+        // ----- Scroll reveal -----
+        const revealObs = new IntersectionObserver((entries) => {
+            entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('show'); revealObs.unobserve(en.target); } });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObs.observe(el));
+
+        // ----- Newsletter validation -----
+        const emailInput = document.getElementById('foot-email');
+        const subBtn = document.getElementById('sub-btn');
+        const footError = document.querySelector('.foot-error');
+        subBtn.addEventListener('click', () => {
+            const val = emailInput.value.trim();
+            footError.classList.remove('ok');
+            if (!val) { footError.textContent = 'Please enter your email address.'; return; }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val)) { footError.textContent = 'Enter a valid email, like name@example.com.'; return; }
+            footError.classList.add('ok');
+            footError.textContent = 'Subscribed. Check your inbox for this week\u2019s workouts.';
+            emailInput.value = '';
+        });
+        emailInput.addEventListener('keydown', e => { if (e.key === 'Enter') subBtn.click(); });
+
+
+
+        // ----- Stats counter -----
+        const countObs = new IntersectionObserver((entries) => {
+            entries.forEach(en => {
+                if (!en.isIntersecting) return;
+                const el = en.target, target = +el.dataset.target, start = performance.now();
+                const tick = (now) => {
+                    const p = Math.min((now - start) / 1800, 1);
+                    el.textContent = Math.floor(target * (1 - Math.pow(1 - p, 3))).toLocaleString();
+                    if (p < 1) requestAnimationFrame(tick);
+                };
+                requestAnimationFrame(tick);
+                countObs.unobserve(el);
+            });
+        }, { threshold: 0.4 });
+        document.querySelectorAll('.counter').forEach(c => countObs.observe(c));
+    </script>
+</body>
+
+</html>
